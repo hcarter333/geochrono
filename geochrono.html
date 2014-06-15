@@ -1,0 +1,1518 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+  <title>Map My Friends</title> 
+    <meta name="KEYWORDS" content="facebook app, map, globe"> 
+    <meta name="DESCRIPTION" content="Map your friends' locations on Google Earth. Watch tours of their photos on Gooogle Earth"> 
+ <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# cfmapmyfriends: http://ogp.me/ns/fb/cfmapmyfriends#">
+  <meta property="fb:app_id" content="431947063491624" /> 
+  <meta property="og:type"   content="cfmapmyfriends:photo_tour" /> 
+  <meta property="og:url"    content="http://apps.facebook.com/cfmapmyfriends?tour={{key}}" /> 
+  <meta property="og:title"  content="Photo Tour" /> 
+  <meta property="og:image"  content="http://copaseticflows.appspot.com/img/mapmyfriends200.jpg" />
+  <meta property="cfmapmyfriends:friend" content="{{tour.friendid}}" />
+  
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1414453-1']);
+  _gaq.push(['_setDomainName', 'none']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  <script src="/jscript/prototype.js" type="text/javascript"></script>
+  <script src="/jscript/scriptaculous.js" type="text/javascript"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAxA4KfHbJOx5n7ISnjtWoORSk1yabMBTVKczv7l6oYTWc2Pb9NBTSCbfB9wfQBQDTFCTdHNLce6jrOg"></script> 
+  <script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAxA4KfHbJOx5n7ISnjtWoORSk1yabMBTVKczv7l6oYTWc2Pb9NBTSCbfB9wfQBQDTFCTdHNLce6jrOg"></script> 
+  <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAxA4KfHbJOx5n7ISnjtWoORSk1yabMBTVKczv7l6oYTWc2Pb9NBTSCbfB9wfQBQDTFCTdHNLce6jrOg" type="text/javascript"></script>
+  <script src="http://earth-api-samples.googlecode.com/svn/trunk/lib/kmldomwalk.js" type="text/javascript"></script>
+  <script type="text/javascript" src="/jscript/main_bang19.js"></script> 
+  <script type="text/javascript" src="/jscript/sat_bang2.js"></script> 
+  <script type="text/javascript" src="/jscript/utils.js"></script> 
+  <script type="text/javascript" src="/jscript/sdg4sdp4.js"></script> 
+  <script type="text/javascript" src="/jscript/extensions-0.2.1.js"></script>
+  <script type="text/javascript"> 
+  //<![CDATA[
+    google.load('earth', '1', {'other_params': 'sensor=false' });
+    var ge = null;
+    var gel = null;
+    var ger = null;
+    var sat_test_string = '{{sats}}';
+    //var sat_test_string = 'AO-07&1 07530U 74089B   11209.57539779 -.00000027  00000-0  10000-3 0  1400&2 07530 101.3933 214.4843 0011634 197.2179 162.8496 12.53583236679370&FO-29&1 24278U 96046B   11209.83847830 -.00000050  00000-0 -16947-4 0  6245&2 24278 098.5514 348.3588 0351007 149.1783 213.0490 13.52963599738093&SO-33&1 25509U 98061B   11209.74724569  .00000356  00000-0  56215-4 0   204&2 25509 031.4358 009.2535 0354444 245.0811 111.2655 14.28434072666224&RS-22&1 27939U 03042A   11209.65237869  .00000217  00000-0  50304-4 0  4854&2 27939 097.8427 061.6609 0012785 210.1378 149.9087 14.63615975418404&VO-52&1 28650U 05017B   11209.61554687  .00000436  00000-0  60861-4 0  8570&2 28650 097.6399 250.8878 0027530 028.2872 331.9850 14.82124524336880&SO-67&1 35870U 09049F   11209.80369753  .00001067  00000-0  51246-4 0   716&2 35870 097.2785 251.7739 0001056 188.8425 282.9937 15.20905423103268&HO-68&1 36122U 09072B   11209.73898033 -.00000044  00000-0  00000 0 0  5989&2 36122 100.4125 269.9162 0007746 128.5180 231.6631 13.16287400 77708&UO-11&1 14781U 84021B   11209.78601988  .00000058  00000-0  14622-4 0  6120&2 14781 098.0031 266.3599 0009115 012.3368 347.8061 14.80003939471944&AO-16&1 20439U 90005D   11208.89957283  .00000063  00000-0  39038-4 0  2422&2 20439 098.3872 157.1617 0011854 045.5761 314.6388 14.31930697123442&LO-19&1 20442U 90005G   11208.90281589  .00000030  00000-0  26636-4 0 01734&2 20442 098.3500 161.3608 0012586 039.3181 320.8916 14.32155195123620&AO-27&1 22825U 93061C   11208.96134221  .00000060  00000-0  40538-4 0 08762&2 22825 098.5334 152.5779 0008765 150.5828 209.5845 14.29355894930010&IO-26&1 22826U 93061D   11208.95331037  .00000023  00000-0  25818-4 0 06206&2 22826 098.5269 153.0315 0009134 144.3533 215.8259 14.29618766930137&GO-32&1 25397U 98043D   11209.60224501 -.00000067  00000-0 -11547-4 0  5390&2 25397 098.3284 199.9538 0001780 123.7573 236.3797 14.23213623677857&NO-44&1 26931U 01043C   11209.66565992  .00000117  00000-0  77909-4 0  8118&2 26931 067.0505 236.6474 0006157 256.4074 103.6378 14.29670120512856&SO-50&1 27607U 02058C   11208.49510150  .00000163  00000-0  46819-4 0 05262&2 27607 064.5567 205.1856 0076213 312.6787 046.7924 14.71777682462023&CO-55&1 27844U 03031E   11208.52840971  .00000091  00000-0  62091-4 0  1624&2 27844 098.7066 216.6436 0010755 081.0429 279.1967 14.20827920418642&CO-57&1 27848U 03031J   11208.54853173  .00000085  00000-0  59720-4 0 01143&2 27848 098.7134 215.8663 0010824 086.1006 274.1418 14.20605772418598&AO-51&1 28375U 04025K   11208.87676489  .00000051  00000-0  28439-4 0 00327&2 28375 098.1012 185.1884 0083752 307.5928 051.7683 14.40769651371927&CP3&1 31129U 07012N   11208.72407920  .00000277  00000-0  73464-4 0 09296&2 31129 097.8966 230.5923 0103404 055.6361 305.4512 14.52524015226723&CO-65&1 32785U 08021C   11209.60045644  .00000174  00000-0  28460-4 0   546&2 32785 097.8468 272.6968 0015705 044.3346 315.9132 14.82058730175679&PRISM&1 33493U 09002B   11209.68973041  .00000818  00000-0  11049-3 0  8134&2 33493 098.1291 338.9182 0018358 267.1623 092.7489 14.81803422135663&SOHLA-1&1 33496U 09002E   11208.96934832  .00000026  00000-0  12702-4 0 04889&2 33496 098.0836 318.3950 0006825 003.4058 356.7188 14.69637617134478&TISAT-1&1 36799U 10035E   11209.69901418  .00000601  00000-0  85271-4 0   865&2 36799 098.0985 278.3578 0016161 139.2646 220.9778 14.80634056 56453&STUDSAT&1 36801U 10035G   11208.82500573  .00001769  00000-0  23613-3 0 02241&2 36801 098.1056 277.3679 0014229 130.4129 229.8326 14.80808989056310&RAX&1 37223U 0        11152.36844328  .00000635  00000-0  96781-4 0 01738&2 37223 071.9713 073.6151 0021634 311.5989 048.3343 14.77415682028541&OOREOS&1 37224U 10062C   11153.29456974  .00000492  00000-0  77478-4 0 01796&2 37224 071.9726 071.8135 0020315 307.7637 052.1684 14.77036357028673&FO-69&1 37227U 0        11208.50244384  .00000172  00000-0  32602-4 0 00924&2 37227 071.9704 310.3714 0017972 210.7452 149.2650 14.76616596015270&NANOSALD&1 37361U 0        11205.21512859  .00282048  00000-0  15825-1 0 02935&2 37361 071.9498 308.5773 0017142 072.4205 287.8812 15.11792873027692&FO-70&1 37380U 0        11208.45474935  .00000166  00000-0  31849-4 0 02270&2 37380 071.9736 310.6330 0018440 207.8270 152.1907 14.76381866036807&NOAA-10&1 16969U 86073A   11208.72420676 -.00000086 00000-0 -17182-4 0 05817&2 16969 098.6175 237.9572 0013105 105.7959 254.4637 14.27469508293438&NOAA-11&1 19531U 88089A   11208.86164493  .00000267  00000-0  16025-3 0 05814&2 19531 098.7516 295.5554 0011976 073.5117 286.7365 14.14921605178501&NOAA-12&1 21263U 91032A   11208.93114130  .00000054  00000-0  41645-4 0 00920&2 21263 098.7508 226.7034 0013436 068.9469 291.3146 14.25727289050217&MET-3/5&1 21655U 91056A   11208.85305792  .00000051  00000-0  10000-3 0  1689&2 21655 082.5563 022.0359 0014618 058.4444 301.8116 13.17027408959073&MET-2/21&1 22782U 93055A   11208.75157120 -.00000111  00000-0 -11322-3 0 01611&2 22782 082.5493 290.6978 0022210 349.3934 010.6739 13.83660428904164&OKEAN-4&1 23317U 94066A   11208.91501376  .00000283  00000-0  31727-4 0 06876&2 23317 082.5407 335.1036 0021765 349.6474 010.4288 14.83112543906586&NOAA-14&1 23455U 94089A   11208.94052980 -.00000030  00000-0  74734-5 0 05808&2 23455 098.8503 291.1698 0009492 159.1106 201.0452 14.13825862854839&NOAA-15&1 25338U 98030A   11208.75151834  .00000009  00000-0  22728-4 0 08990&2 25338 098.6570 194.3428 0010373 340.2987 019.7758 14.24935155686507&RESURS&1 25394U 98043A   11208.92458661 -.00000046  00000-0 -24262-5 0 08644&2 25394 098.3021 209.7062 0002297 093.9787 266.1657 14.24235221678108&FENGYUN1&1 25730U 99025A   11208.87056271  .00000768  00000-0  46984-3 0 03966&2 25730 098.8189 169.1736 0022084 197.9011 162.1400 14.08707561628794&OKEAN-0&1 25860U 99039A   11208.96538036  .00000170  00000-0  33463-4 0 03730&2 25860 097.8879 174.2960 0000771 104.8363 255.2927 14.73808709646667&NOAA-16&1 26536U 00055A   11208.73282136 -.00000115  00000-0 -36953-4 0 03810&2 26536 099.1384 240.0942 0009702 279.6302 080.3777 14.12631932559087&NOAA-17&1 27453U 02032A   11208.71083474  .00000199  00000-0  10393-3 0 03671&2 27453 098.3770 246.5558 0012229 035.3724 324.8270 14.24295942472429&NOAA-18&1 28654U 05018A   11208.71792371  .00000139  00000-0  10127-3 0 08477&2 28654 098.9969 159.9691 0014422 354.8662 005.2360 14.11495462318649&NOAA-19&1 33591U 09005A   11208.72409776  .00000052  00000-0  53266-4 0 00386&2 33591 098.8265 148.1999 0013343 219.6498 140.3688 14.11187660127101&HUBBLE&1 20580U 90037B   11208.86612112  .00000721  00000-0  41789-4 0  8063&2 20580 028.4694 110.7059 0003629 194.0668 165.9800 15.01434462965770&ISS&1 25544U 98067A   11209.79583769  .00004887  00000-0  64929-4 0  7930&2 25544 051.6416 311.2921 0011950 016.6266 126.9231 15.60217330727409&CO-58&1 28895U 05043F   11208.63397388  .00000215  00000-0  53921-4 0 09344&2 28895 097.9598 083.4487 0019020 093.9043 266.4336 14.60137896306144&FALCON&1 30776U 07006E   11209.84466032  .00001276  00000-0  91561-4 0  1378&2 30776 035.4331 093.6543 0000932 023.7106 336.3633 15.04779051241325&MAST&1 31126U 07012K   11208.91949702  .00000296  00000-0  76510-4 0 02203&2 31126 097.8938 233.8403 0095537 044.3034 316.5779 14.53777165227004&CAPE1&1 31130U 07012P   11209.49477960  .00000272  00000-0  72598-4 0  2345&2 31130 097.8988 231.0892 0103283 053.3574 307.7068 14.52429010226636&COMPASS&1 32787U 08021E   11209.65319465  .00000296  00000-0  43397-4 0   505&2 32787 097.8453 272.6939 0016615 043.3728 316.8795 14.82510222175705&AAUSAT2&1 32788U 08021F   11208.66680521  .00000277  00000-0  40769-4 0 00420&2 32788 097.8456 271.9632 0016043 048.7169 311.5456 14.82699543175579&DO-64&1 32789U 08021G   11208.73031391  .00000753  00000-0  98447-4 0 00586&2 32789 097.8553 273.1088 0016217 045.7981 314.4560 14.83216409175596&CO-66&1 32791U 08021J   11208.73359020  .00000423  00000-0  59567-4 0 00451&2 32791 097.8447 271.7187 0017000 046.3449 313.9166 14.82187617175517&RS-30&1 32953U 08025A   11209.76018471  .00000010  00000-0  00000 0 0  9433&2 32953 082.5040 136.8834 0018066 300.4007 059.5289 12.43014387144258&TACSAT-3&1 35001U 09028A   11208.65803414  .00012048  00000-0  21080-3 0  6537&2 35001 040.4538 286.7596 0020380 153.9799 206.2047 15.50143125123367&PHARMSAT&1 35002U 09028B   11209.60531062  .00008886  00000-0  15987-3 0  6096&2 35002 040.4702 279.0066 0022210 169.0008 191.1300 15.49547655123530&HAWKSAT1&1 35003U 09028C   11209.41493037  .00063139  00000-0  47912-3 0  7002&2 35003 040.4522 243.8447 0016395 185.8379 174.2241 15.71188686123904&CP6&1 35004U 09028D   11209.45257431  .00145612  00000-0  64638-3 0  7059&2 35004 040.4505 231.2913 0014903 181.7561 178.3218 15.82936479124033&METEOR-M&1 35865U 09049A   11209.74072731  .00000176  00000-0  10000-3 0  5885&2 35865 098.7030 264.3249 0001811 290.2074 069.8878 14.21840660 96497&RS-38&1 35869U 09049E   11209.66529945  .00000177  00000-0  10000-3 0  5807&2 35869 098.7001 264.2842 0003734 277.3196 082.7529 14.22017303 96492&';
+
+         var map_location = 'current_location';
+         
+         
+         
+         function changeMap(){
+        	 if(el('map_type').value == 'Map Hometowns'){
+            	 map_location = 'hometown_location';
+            	 //remove the current kml
+            	 RemoveAllFeatures();
+        		 el('map_type').value = 'Map Current Locatioans'
+            	 test_fql();
+        	 }else{
+            	 map_location = 'current_location';
+            	 //remove the current kml
+            	 RemoveAllFeatures();
+        		 el('map_type').value = 'Map Hometowns'
+            	 test_fql();
+        	 }
+         }
+ 
+    function init()
+    {
+
+      resize();
+      window.onresize = resize;
+      google.earth.createInstance("map3d", initCB, null);
+      //google.earth.createInstance("map3dl", initCBl, null);
+      //google.earth.createInstance("map3dr", initCBr, null);
+    }
+    
+    function testcheck(){
+    	alert('clicked box');
+    }
+
+    var earth_init = false;
+    var fb_init = false;
+    function initCB(object)
+    {
+      ge = object;
+      //Instead of starting here, call my_sat_test to substitue in the test data
+      //getFile('grabTLE.php?tle=iridium-33-debris,cosmos-2251-debris');
+      //my_sat_test();
+      my_friendmap_test();
+
+      //bang_begin();
+      //If you get here before ther is a user then don't init the user canon yet
+      earth_init = true;
+      //if(user_location != ''){
+    //	  set_cannon(user_location);
+      ///}
+     if(fb_init){
+     	 //if(friend_count != friend_response.data.length){
+     	 // 	   //begin_map_friend();
+     	 // 	 }
+     	 test_fql();
+     }
+     
+     
+
+    
+    }
+
+    function initCBl(object)
+    {
+      gel = object;
+      //Instead of starting here, call my_sat_test to substitue in the test data
+      //getFile('grabTLE.php?tle=iridium-33-debris,cosmos-2251-debris');
+      my_sat_test_l();
+      //bang_begin();
+    }
+
+    function initCBr(object)
+    {
+      ger = object;
+      //Instead of starting here, call my_sat_test to substitue in the test data
+      //getFile('grabTLE.php?tle=iridium-33-debris,cosmos-2251-debris');
+      my_sat_test_r();
+      //bang_begin();
+    }
+    
+    
+    
+    function resize(){
+      var windowheight = document.body.clientHeight;  // IE 7 & 8
+      var windowwidth = document.body.clientWidth;  // IE 7 & 8
+      if (window.innerHeight){windowheight = window.innerHeight} // Firefox
+      if (window.innerWidth){windowwidth = window.innerWidth} // Firefox
+      if (windowheight < 3026)  el("map3d_container").style.height = (windowheight-(25+55+90))+"px";
+      if (windowheight < 3026)  el("map3d").style.height = (windowheight-(25+55+90))+"px";
+      //if (windowheight < 3026)  el("map3dl").style.height = (windowheight-(25+90+90))+"px";
+      //if (windowheight < 3026)  el("map3dr").style.height = (windowheight-(25+90+90))+"px";
+      //if (windowheight < 3026)  el("passes_container").style.height = (windowheight-(25+90+90))+"px";
+      //if (windowwidth < 3026)  el("map3d_container").style.width = (windowwidth-450)+"px";
+    }
+ 
+ 
+ 
+ 
+  //]]>
+  </script> 
+ 
+  <style type="text/css"> 
+    html, body, form {margin:0px;padding:0px;border:0px;height:100%;color:white;line-height: 140%;overflow:hidden;}
+    #gad {height:93px;}
+    #info {height:25px;background-color:#202020;vertical-align:top}
+    #map3d_container {height: 395px; width: 100%; float:right}
+    #map3d {height: 500px; width: 700px;postion:relative;}
+    #map3dl {height: 500px; width: 300px;postion:relative;background:#333333; overflow-y:auto}
+    #map3dr {height: 500px; width: 300px;postion:relative;background:#333333; overflow-y:auto}
+    #date {float: left; padding: 2px 0 0 10px;}
+    #pass_button {float: left; padding: 2px 0 0 10px;}
+    #about {float: left; padding: 2px 10px 0 10px;}
+    #options {float:right; padding-top: 1px;}
+    #balloon {color:black;}
+    .checkboxes label{    display: block;    float: left;    padding-right: 10px;    white-space: nowrap;}
+    .checkboxes input{    vertical-align: middle;}
+    .checkboxes label span{    vertical-align: middle;}
+ 
+    a {color:#d0d0d0;}
+  </style> 
+
+
+
+<style type="text/css" media="screen">     
+.tableinput{border: 0px solid #666666; background-color: #ffff00; color: #000000;}    
+img{}
+table.quiz td{font-size:14px;}
+    #tabs{
+        margin-left: 4px;
+        padding: 0;
+        background: transparent;
+        voice-family: "\"}\"";
+        voice-family: inherit;
+        padding-left: 5px;
+    }
+    #tabs ul{
+        font: bold 11px Arial, Verdana, sans-serif;
+        margin:0;
+        padding:0;
+        list-style:none;
+    }
+    #tabs li{
+        display:inline;
+        margin:0 2px 0 0;
+        padding:0;
+        text-transform:uppercase;
+    }
+    #tabs a{
+        float:left;
+        background:#888888 url(images/tabs_left.gif) no-repeat left top;
+        margin:0 2px 0 0;
+        padding:0 0 1px 3px;
+        text-decoration:none;
+    }
+    #tabs a span{
+        float:left;
+        display:block;
+        background: transparent url(images/tabs_right.gif) no-repeat right top;
+        padding:4px 9px 2px 6px;
+    }
+    #tabs a span{float:none;}
+    #tabs a:hover{background-color: #666666;color: white;}
+    #tabs a:hover span{background-color: #666666;}
+    #tabHeaderActive span, #tabHeaderActive a { background-color: #666666; color:#ffffff;}
+    .tabContent {
+        clear:none;
+        border:2px solid #42577B;
+        padding-top:2px;
+        background-color:#FFF;
+    }
+
+    .qslgadget{
+       overflow-y:auto;
+       overflow-x:auto;
+       color:#DDDDDD;
+     }  
+
+
+    #htabs{
+        margin-left: 4px;
+        padding: 0;
+        background: transparent;
+        voice-family: "\"}\"";
+        voice-family: inherit;
+        padding-left: 5px;
+    }
+    #htabs ul{
+        font: bold 11px Arial, Verdana, sans-serif;
+        margin:0;
+        padding:0;
+        list-style:none;
+    }
+    #htabs li{
+        display:inline;
+        margin:0 2px 0 0;
+        padding:0;
+        text-transform:uppercase;
+    }
+    #htabs a{
+        float:left;
+        background:#888888 url(images/tabs_left.gif) no-repeat left top;
+        margin:0 2px 0 0;
+        padding:0 0 1px 3px;
+        text-decoration:none;
+    }
+    #htabs a span{
+        float:left;
+        display:block;
+        background: transparent url(images/tabs_right.gif) no-repeat right top;
+        padding:4px 9px 2px 6px;
+    }
+    #htabs a span{float:none;}
+    #htabs a:hover{background-color: #666666;color: white;}
+    #htabs a:hover span{background-color: #666666;}
+    #htabHeaderActive span, #htabHeaderActive a { background-color: #666666; color:#ffffff;}
+
+a:link {color:#DDDDDD;}      /* unvisited link */
+a:visited {color:#DDDDDD;}  /* visited link */
+a:hover {color:#DDDDDD;}  /* mouse over link */
+a:active {color:#DDDDDD;}  /* selected link */
+a.helpimg:link {color:#FFFFFF}
+a.helpimg:visited {color:#FFFFFF}
+a.examhlink:link {color:#0000FF}
+a.examhlink:visited {color:#0000FF}
+
+
+#entries
+{
+font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+width:100%;
+border-collapse:collapse;
+}
+#entries td, #entries th 
+{
+font-size:.8em;
+border:1px solid #98bf21;
+padding:3px 7px 2px 7px;
+}
+#entries th 
+{
+font-size:.9em;
+text-align:left;
+padding-top:5px;
+padding-bottom:4px;
+background-color:#A7C942;
+color:#ffffff;
+}
+#entries tr.alt td 
+{
+color:#000000;
+background-color:#EAF2D3;
+}
+#entries tr.notalt td 
+{
+color:#000000;
+background-color:#ffffff;
+}
+
+
+</style>
+
+</head> 
+ 
+<body id='body' onload='init()'  onunload='//google.earth.removeEventListener(ge, "frameend", tick);' style="background-color:#111111; padding-right:50px ; padding-left:50px; y-overflow:auto"> 
+<link type="text/css" rel="stylesheet" href="/jscript/headerhelp.css" />
+
+
+    <div id='gad'>
+        <script type="text/javascript"><!--
+google_ad_client = "ca-pub-6583317371769852";
+/* SatTrack */
+google_ad_slot = "4399438041";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+    </div>
+    <div id='info'> 
+        <div id='about'><a href='javascript:about();void(0);'></a>
+                <div class="fb-like" data-href="http://apps.facebook.com/cfmapmyfriends" data-send="true" data-layout="button_count" data-width="250" data-show-faces="false" data-colorscheme="dark"></div>
+        
+        </div> 
+        <div id='about'><a target="_blank" href="http://www.facebook.com/cfmapmyfriends">Fan Page</a> 
+        <a target="_blank" href="http://copaseticflows.appspot.com/examhelp/acf.html">About the Author</a>
+        <input id="get_passes" type="button" value="Create Photo Tour" onclick="Effect.SlideDown('slidedown_demo'); return false;"></input>
+        <input id="save_tour" type="button" value="Share Tour" onclick="save_tour()"></input>
+        <!-- <input id="get_passes" type="button" value="Choose Photos" onclick="Effect.SlideDown('photo_slidedown'); return false;"></input> -->
+        <input id="map_type" type="button" value="Map Hometowns" onclick="changeMap();"></input>
+        <a href="javascript:void(0)" 
+        onclick="javascript:FB.ui({method: 'apprequests', message: 'Map the current location and hometowns of your friends.', title:'Invite your friends.'});">Invite Friends</a>
+        </div>
+        <div id='date'></div>
+        <div id='pass_button'></div> 
+        <form id='options' action=''> 
+		<div class="checkboxes"> 
+		
+		<label for="x"><input type="hidden" onclick='updateOptions()' name='altitude' checked="true" id="x" /> </label> 
+		 
+		<!-- <label for="y"><input type="checkbox" onclick='updateOptions()' name='borders' id="y" /> <span>Places</span></label> --> 
+        </div></form> 
+    </div>
+        <div id='donateauthor' ><form style="width:200px; height:35px; padding:0; margin:0" action="https://www.paypal.com/cgi-bin/webscr" method="post"> 
+  <input value="_s-xclick" name="cmd" type="hidden" /> <input value="1659844" name="hosted_button_id" type="hidden" /> 
+  <input border="0" alt="" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" name="submit" type="image" /> 
+  <img border="0" alt="" width="1" src="https://www.paypal.com/en_US/i/scr/pixel.gif" height="1" /> 
+  </form></div>
+<div id="msg_div" style="display:none; width:100%; height:240px; background:#000000; text-align:center;">
+  <div id="msg_here" style="height:80%; width:100%; overflow:scroll;">
+    This is some test content. This is some test content.
+    <input type="checkbox" value="" onclick="testcheck()"></input>
+  </div>
+  <div style="height:20px; width:100%">
+ 	<input id="" type="button" value="OK" onclick="$('msg_div').hide(); statmap_count = 0; return false;">
+  </div>
+</div>
+<div id="slidedown_demo" style="display:none; width:100%; height:240px; background:#000000; text-align:center;">
+  <div>Click on a friend to create a tour of their photos.</div>
+  <div id="friend_list" style="height:80%; width:100%; overflow:scroll;">
+    This is some test content. This is some test content.
+    <input type="checkbox" value="" onclick="testcheck()"></input>
+  </div>
+  <div style="height:20px; width:100%">
+ 	<!-- <input id="" type="button" value="Submit" onclick="friends_static_map(); $('slidedown_demo').hide(); statmap_count = 0; return false;"></input> -->
+ 	<!-- <input id="" type="button" value="Submit" onclick="friends_photo_map(); $('slidedown_demo').hide(); statmap_count = 0; return false;"></input> -->
+ 	<input id="" type="button" value="Cancel" onclick="$('slidedown_demo').hide(); statmap_count = 0; return false;">
+  </div>
+</div>
+
+<div id="photo_slidedown" style="display:none; width:100%; height:240px; background:#000000; text-align:center;">
+  <div>Choose which pictures to include</div>
+  <div id="photo_list" style="height:80%; width:100%; overflow:scroll;">
+    Photo list test content.
+    <input type="checkbox" value="" onclick="testcheck()"></input>
+  </div>
+  <div sytle="height:20px; width:100%">
+ 	<!-- <input id="" type="button" value="Submit" onclick="friends_static_map(); $('slidedown_demo').hide(); statmap_count = 0; return false;"></input> -->
+ 	<input id="" type="button" value="Submit" onclick="friends_photo_map(); $('photo_slidedown').hide(); statmap_count = 0; return false;"></input>
+ 	<input id="" type="button" value="Cancel" onclick="$('photo_slidedown').hide(); statmap_count = 0; return false;">
+  </div>
+</div>
+
+
+  <div id='map3d_container'> 
+    <table style="width:100%">
+    <tr align="center">
+
+    <td align="center" >
+
+    <div id='map3d'></div> 
+    </td>
+
+    </tr>
+    </table>
+    
+  </div> 
+ 
+ <div id="fb-root"></div>
+<script src="https://connect.facebook.net/en_US/all.js"></script>
+
+<script>
+var reqfb;
+
+
+//test id 237308279707654
+//release id 431947063491624
+FB.init({appId: '431947063491624', status: true, cookie: true,
+    xfbml: true});
+//Listen for the user to login and then customize
+FB.Event.subscribe('auth.login', function(response) {
+  // do something with response
+  fb_setup();
+});
+
+//If the user is already logged in and connected, then get rid of the login button
+FB.getLoginStatus(function(response) {
+  if (response.authResponse) {
+    // logged in and connected user, someone you know
+    fb_setup();
+    
+  } else {
+    // no user session available, someone you dont know
+    //fb_setup();
+  }
+}, true);
+
+
+
+
+function logComm( commentxid ){                      
+        //Now send the scores to the db
+        if (typeof XMLHttpRequest != "undefined") {
+            reqfb = new XMLHttpRequest();
+        } else if (window.ActiveXObject) {
+            reqfb = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        var comm_params = "xid=" +
+                      encodeURIComponent(commentxid);
+        
+        reqfb.open("POST", '/fbcomm', true);
+        reqfb.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        reqfb.setRequestHeader("Content-length", comm_params.length);
+        reqfb.setRequestHeader("Connection", "close");
+
+        
+        reqfb.onreadystatechange = comm_cb;
+        reqfb.send(comm_params);
+}
+
+function comm_cb(){
+
+}
+
+FB.Event.subscribe('comments.add', function(response) {
+      //var msession = FB.getSession();
+      //alert('Comment usera:' + response.widget._attr.xid);
+      logComm(response.widget._attr.xid);
+    });    
+
+         
+var user_location = '';        
+         function fb_setup(){
+           FB.api('/me', function(user) {
+             if(user != null) {
+                //document.getElementById('fblogin').innerHTML = '';
+                //alert(user.name);
+                //var image = document.getElementById('fbimage');
+                //image.src = 'http://graph.facebook.com/' + user.id + '/picture';
+                //image.innerHTML = '<img src="http://graph.facebook.com/' + user.id + '/picture' + '">';
+                //var name = document.getElementById('fbname');
+                //name.innerHTML = user.name
+                login_user = user.id;
+                login_name = user.name;
+                if(user.location.name != null){
+                	//set_cannon(user.location.name);
+                	//user_location = user.location.name;
+                	//If you arrive here after the map is initialized, then setup the user canon
+                	//if(earth_init){
+                	//  set_cannon(user_location);
+                	//}
+                }
+                friend_targets();
+             }
+           });
+         }
+         
+         function friend_targets(){
+        	 FB.api('/me/friends?fields=name,location', friends_back);        	 
+        	 
+         }
+         
+         var friend_count = 0;
+         var friends_locted = 0;
+         var friend_response;
+         //var fb_init = false;
+         
+         function friends_back(response){
+        	 //walk list of friends.  print picture, name, and location
+        	 //alert('Landed in list of friends ', response);
+        	 //sort the friend list
+        	 response.data.sort(name_sort);
+        	 //html_list = 'Choose which friend to target';
+        	 //html_list += '<table>';
+        	 friend_response = response;
+        	 friend_loc_count = response.data.length;
+        	 //for(var i = 0; i < response.data.length; i += 1){
+        		 //html_list += '<tr><td><img src="http://graph.facebook.com/' + response.data[i].id + '/picture' + '">';
+        		 //html_list += '<a href="javascript:void(0)" onClick="begin_locate_friend(' + response.data[i].id + ')">';
+        		 //html_list += response.data[i].name + '</a></td></tr>';
+        	 //}
+        	 //html_list += '</table>';
+        	 //write the friend list to the div
+        	 //el('flist').innerHTML = html_list;
+        	 
+        	 friend_count = 0;
+        	 fb_init = true;
+        	 if(earth_init){
+        	   //begin_map_friend();
+        	   test_fql();
+        	 }
+         }
+         
+         var friend_locs = [];
+         
+         function friend_style(index, id, friendname, friend_location){
+        	 style = '<Style id="friend' + index + '"><IconStyle><Icon><href>http://graph.facebook.com/' + id + '/picture</href>';
+        	 style += '</Icon><scale>1.0</scale></IconStyle>';
+        	 style += '<BalloonStyle><bgColor>00000000</bgColor><text><![CDATA[<p style="background-color:#000000;color:#0000ff"><a style="color=#0000ff" target="_blank" href="http://www.facebook.com/' + id + '">';
+        	 style += friendname + '</a></br>' + friend_location + '</p>]]></text></BalloonStyle>';
+        	                       
+        	 style += '</Style>';
+        	 return style;
+         }
+         
+         function fbfriend_style(id, friendname, friend_location){
+        	 style = '<Style id="friend' + id + '"><IconStyle><Icon><href>http://graph.facebook.com/' + id + '/picture</href>';
+        	 style += '</Icon><scale>4.0</scale></IconStyle>';
+        	 style += '<BalloonStyle><bgColor>00000000</bgColor><text><![CDATA[<p color="#0000ff"><a color="#0000ff" target="_blank" href="http://www.facebook.com/' + id + '">';
+        	 style += friendname + '</br>' + friend_location + '</a></p>]]></text></BalloonStyle>';
+        	                       
+        	 style += '</Style>';
+        	 return style;
+         }
+
+         function photo_loc_name(place_id){
+        	 var placestring = '';
+        	 //If there's not a city name, then just return the location name
+        	 if(photo_locs_all[place_id].location.city == null)
+        		 {
+        		 return photo_locs_all[place_id].name;
+        		 }
+        	 if(photo_locs_all[place_id].name.indexOf(photo_locs_all[place_id].location.city) == -1){
+        		 placestring = photo_locs_all[place_id].name;
+        		 placestring += ', ' + photo_locs_all[place_id].location.city;
+        		 //check for state or country
+        		 if(photo_locs_all[place_id].location.state != null){
+        		   placestring += ', ' + photo_locs_all[place_id].location.state;
+        		 }
+        		 else if(photo_locs_all[place_id].location.country != null){
+          		   placestring += ', ' + photo_locs_all[place_id].location.country;
+        		 }
+        	 }
+            return placestring;
+         }
+         
+         function fbphoto_style(id, caption, small, big, link, wide, high, place_id){
+        	 style = '<Style id="photo' + id + '"><IconStyle><Icon><href>' + small + '</href>';
+        	 style += '</Icon><scale>4.0</scale></IconStyle>';
+        	 style += '<BalloonStyle><bgColor>00000000</bgColor><textColor>ffffffff</textColor><text>';
+        	 //determine if the name is the city or not
+        	 style += '<![CDATA[<p color="#0000ff">'+ photo_loc_name(place_id) + '</br>';
+        	 style += '<img width="300px" height="' + parseInt(high*(300/wide)) + 'px" src="' + big + '"></img></br>'+ caption;
+        	 style += '</br><a color="#0000ff" target="_blank" href="' + link + '">';
+        	 style += 'photo facebook page</br></a></p>]]></text></BalloonStyle>';
+        	                       
+        	 style += '</Style>';
+        	 return style;
+         }
+
+         function friend_placemark(index){
+        	 var place = '';
+        	 if(friend_locs[index] != null){
+        	   latlng = friend_locs[index]; 
+        	   place = '<Placemark><name></name><description></description><styleUrl>#friend' + index + '</styleUrl>';
+        	   place += '<MultiGeometry><Point><altitudeMode>absolute</altitudeMode><coordinates>';
+        	   place += latlng.lng() + ',' + latlng.lat() + '</coordinates></Point></MultiGeometry></Placemark>';
+        	   
+        	 }else{
+        		 test = 3;
+        	 }
+        	 return place;
+         }
+         
+         var lastplace = null;
+         function buildFlyTo(firstplace, secondplace, tilt, delay, photoid){
+           	var flyto = '';
+           	var repor = '';
+        	if(firstplace != lastplace){
+              	var flyto = '<gx:FlyTo><gx:duration>' + delay + '</gx:duration><gx:flyToMode>bounce</gx:flyToMode><LookAt>';
+                var repos = '<gx:FlyTo><gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt>';
+              	//get the heading between the two points
+                  secondlat = photo_locs_lat[firstplace];
+              	secondlong = photo_locs_lng[firstplace];
+            
+          	//if this is a new place
+          	    flyto += '<longitude>' + secondlong + '</longitude>';
+          	    flyto += '<latitude>' + secondlat + '</latitude>';
+          	    	flyto += '<range>' + 1000 + '</range><altitudeMode>clampToGround</altitudeMode>';
+              	//flyto += '<heading>' + viewh + '</heading>';
+              	flyto += '<tilt>' + tilt + '</tilt>';
+              	//Setup the gx:FlyTo footer
+              	flyto += '</LookAt></gx:FlyTo>';
+          	}
+          	
+          	
+          	//reposition the camera
+      	    repos += '<longitude>' + secondlong + '</longitude>';
+      	    repos += '<latitude>' + secondlat + '</latitude>';
+      	    repos += '<range>' + 1000 + '</range><altitudeMode>clampToGround</altitudeMode>';
+          	repos += '<tilt>' + 89.5 + '</tilt>';
+          	repos += '</LookAt></gx:FlyTo>';
+          	
+          	//flyto += repos;
+          	
+            flyto += fbphoto_activate(photoid);
+            
+            lastplace = firstplace;
+          	
+          	return flyto;
+
+          }
+         
+         function fbphoto_activate(uid){
+             var btext = '<gx:AnimatedUpdate><gx:duration>0.0</gx:duration><Update>';
+             btext += '<targetHref/><Change><Placemark targetId="photo_pm' + uid + '">';
+             btext += '<gx:balloonVisibility>1</gx:balloonVisibility></Placemark>';
+             btext += '</Change></Update></gx:AnimatedUpdate><gx:Wait><gx:duration>7.0</gx:duration></gx:Wait>';
+             
+             btext += '<gx:AnimatedUpdate><gx:duration>0.0</gx:duration><Update>';
+             btext += '<targetHref/><Change><Placemark targetId="photo_pm' + uid + '">';
+             btext += '<gx:balloonVisibility>0</gx:balloonVisibility></Placemark>';
+             btext += '</Change></Update></gx:AnimatedUpdate>';
+             
+             return btext;
+         }
+
+         function fbphoto_placemark(uid, place_id){
+        	 var place = '';
+        	   //latlng = friend_locs[index]; 
+        	   place = '<Placemark id="photo_pm' + uid + '"><name></name><description></description><styleUrl>#photo' + uid + '</styleUrl>';
+        	   place += '<MultiGeometry><Point><altitudeMode>absolute</altitudeMode><coordinates>';
+        	   place += photo_locs_lng[place_id] + ',' + photo_locs_lat[place_id] + '</coordinates></Point></MultiGeometry></Placemark>';
+        	   
+       		 test = 3;
+        	 return place;
+         }
+
+         function fbfriend_placemark(uid, place_id){
+        	 var place = '';
+        	   //latlng = friend_locs[index]; 
+        	   place = '<Placemark><name></name><description></description><styleUrl>#friend' + uid + '</styleUrl>';
+        	   place += '<MultiGeometry><Point><altitudeMode>absolute</altitudeMode><coordinates>';
+        	   place += friend_locs_lng[place_id] + ',' + friend_locs_lat[place_id] + '</coordinates></Point></MultiGeometry></Placemark>';
+        	   
+       		 test = 3;
+        	 return place;
+         }
+
+         var friend_locs_lng = new Array();
+         var friend_locs_lat = new Array();
+         var friend_place_id = new Array();
+         var locfriends = [];
+        
+         var friendid = '';
+         function test_fql(){
+        	 var locid = '';
+        	 var frid = '';
+             var locations = [];
+             var friendids = [];
+        	 FB.api(
+        		        {
+        		            method: 'fql.query',
+        		            query: 'SELECT uid, ' + map_location + ', name from user where uid in (select uid2 FROM friend WHERE uid1=me())'
+        		        },
+        		        function(data) {
+        		            //    do something with the response
+        		            test = 3;
+        		            locfriends = data;
+        		            
+        		            //get the necessary infomration for the user as well
+        		            FB.api({
+        		            	    method: 'fql.query',
+        		            	    query: 'SELECT uid, ' + map_location + ', name from user where uid = me()'
+        		            },
+        		            function(data){
+        		            	locfriends = data.concat(locfriends);
+
+        		            	//parse the result, and get the location ids
+            		            //then, get coordinates for the locations
+            		            for(var i = 0; i < locfriends.length; i += 1){
+                		            	if(locfriends[i][map_location] != null){
+                		            		if(locfriends[i][map_location].id != undefined){
+                        		            	locations.push(locfriends[i][map_location].id);  
+                        		            	friendids.push(locfriends[i].uid);
+            		            	    		friend_place_id[locfriends[i].uid.toString()] = locfriends[i][map_location].id;
+                		            		}
+                		            	}
+            		            }
+            		            for(var k = 0; k < locations.length; k += 1){
+        		            		locid += locations[k];
+        		            		frid += friendids[k];
+            		            	if(k != locations.length - 1){
+            		            		locid += ', ';
+            		            		frid += ', ';
+            		            	}
+            		            }
+            		            //Now execute a second query to get all the locations
+            		            //new_query = 
+            		            FB.api({method: 'fql.query',
+            		            	    query: 'SELECT page_id, location from page where page_id in (' + locid + ')'
+            		            	    },
+            		            	    function(data_loc){
+            		            	    	test = 33;
+            		            	    	//now finally, map everyones locations
+            		            	    	//put the coordinates in arrays
+            		            	    	for(var m = 0; m < data_loc.length; m += 1){
+            		            	    		friend_locs_lat[data_loc[m].page_id] = data_loc[m].location.latitude;
+            		            	    		friend_locs_lng[data_loc[m].page_id] = data_loc[m].location.longitude;
+            		            	    	}
+            		            	    	//now build and display the kml
+            		            	    	build_fbfriends_kml();
+            		            	    	
+            		            	    	//go find the geolocated friend photos
+            		            	    	build_photo_friend_list(0);
+
+            		            	    });
+        		            });
+        		        });        	 
+        	 
+         }
+         
+         var photo_locs_lng = new Array();
+         var photo_locs_lat = new Array();
+         var photo_locs_name = new Array();
+         var photo_locs_all = new Array();
+         var locphotos = [];
+         var friend_to_save;
+         var photo_string;
+
+         function get_photos(fp_id){
+             friend_to_save = fp_id;
+        	 RemoveAllFeatures();
+        	    var la = ge.createLookAt(''); 
+        	    la.set(39, -82, 0, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 10000000); 
+        	    ge.getView().setAbstractView(la);     
+   
+        	 
+        	 var locid = '';
+             var locations = [];
+             locphotos.length = 0;
+             //don't need to query... stored all the data earlier in photo_data
+             //do need to query... some people have over 1000 pictures... slow down computer
+        		            FB.api({method: 'fql.query',
+        		            	    query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, src_big_width, src_big_height, caption from photo where aid in (select aid FROM album WHERE owner = ' + fp_id + ') and place_id != \'\''
+        		            	    },
+        		            	    function(data_loc){
+            		            	    	photo_data = data_loc;
+             
+        		             var loc_found = false;
+                             for(var k = 0; k < photo_data.length; k += 1){
+    		            		
+        		            	if(photo_data[k].owner == fp_id){
+        		            		if(loc_found){
+        		            			locid += ", ";
+        		            			photo_string += ', ';
+        		            		}
+        		            		loc_found = true;
+    		            			locphotos.push(photo_data[k]);
+            		            	locid += photo_data[k]["place_id"];
+            		            	photo_string += photo_data[k]["object_id"];
+            		            	//if(k != locations.length - 1){
+            		            	//	locid += ', ';
+            		            	//}
+    		            		}
+        		            }
+
+        		            FB.api({method: 'fql.query',
+    		            	    query: 'SELECT page_id, location, name from page where page_id in (' + locid + ')'
+    		            	    },
+    		            	    function(data_loc){
+    		            	    	test = 33;
+    		            	    	//now finally, map everyones locations
+    		            	    	//put the coordinates in arrays
+    		            	    	for(var m = 0; m < data_loc.length; m += 1){
+    		            	    		photo_locs_lat[data_loc[m].page_id] = data_loc[m].location.latitude;
+    		            	    		photo_locs_lng[data_loc[m].page_id] = data_loc[m].location.longitude;
+    		            	    		photo_locs_name[data_loc[m].page_id] = data_loc[m].name;
+    		            	    		photo_locs_all[data_loc[m].page_id] = data_loc[m];
+    		            	    	}
+    		            	    	//now build and display the kml
+    		            	    	build_fbphotos_kml();
+
+    		            	    });
+             
+        		            	    	});
+        	 
+         }
+
+         function RemoveAllFeatures()
+         {
+           var features = ge.getFeatures();
+           while (features.getLastChild() != null)
+           {
+             features.removeChild(features.getLastChild());
+           }
+         }
+         
+         
+         var statmap = new Array();
+         var statmap_count = 0;
+         
+         function map_friends_photos(){
+        	 //make fql query
+        	 
+        	 
+         }
+         
+         
+         
+         var photos_changed = false;
+         var photo_sel_list = [];
+         
+         function friends_photo_map(){
+        	 //use the group of five defined friends
+        	 //for testing, load up the first 5 friends
+        	 //for(var k = 0; k < 5; k += 1){
+        	 //	 statmap[k] = k
+        	 //}
+        	 for(key in statmap){
+            	 //create the map string
+            	 if(statmap.hasOwnProperty(key)){
+                	 var findex = parseInt(key);
+                	 get_photos(locfriends[findex].uid);
+            	 }
+        	 }
+        	 
+        	 //clear stroage of friends for map
+        	 for(dkey in statmap){
+            	 //create the map string
+            	 if(statmap.hasOwnProperty(key)){
+            		 delete statmap[dkey];
+            	 }
+        	 }
+         }
+
+         function friends_static_map(){
+        	 //use the group of five defined friends
+        	 //for testing, load up the first 5 friends
+        	 //for(var k = 0; k < 5; k += 1){
+        	 //	 statmap[k] = k
+        	 //}
+        	 var statmapstring = 'http://maps.googleapis.com/maps/api/staticmap?size=640x640&';
+        	 for(key in statmap){
+            	 //create the map string
+            	 if(statmap.hasOwnProperty(key)){
+                	 var findex = parseInt(key);
+            		 statmapstring += 'markers=icon:http://graph.facebook.com/' + locfriends[findex].uid;
+                		 statmapstring += '/picture|' + friend_locs_lat[locfriends[findex][map_location].id] + 
+		                  ',' + friend_locs_lng[locfriends[findex][map_location].id] + '|&'; 
+            		 //uncheck the selection box
+            		 el('fcb_' + findex).checked = false;
+            	 }
+        		                  
+        	 }
+        	 
+        	 //clear stroage of friends for map
+        	 for(dkey in statmap){
+            	 //create the map string
+            	 if(statmap.hasOwnProperty(key)){
+            		 delete statmap[dkey];
+            	 }
+        	 }
+            		 
+             statmapstring += 'sensor=false';
+        	 el('date').innerHTML = '<a target="_blank" href="' + statmapstring + '">testmap</a>';
+        	 
+        	 //now add the map to the user's photos
+        	 //var imgURL="http://farm4.staticflickr.com/3332/3451193407_b7f047f4b4_o.jpg";//change with your external photo url
+        	 FB.api('/me/photos', 'post', {
+        	     url:statmapstring
+        	 }, function(response){
+
+        	     if (!response || response.error) {
+        	         alert('Error occured' + response.error.message);
+        	     } else {
+        	         //alert('Post ID: ' + response.id);
+        	     }
+
+        	 });        	 
+        	 
+         }
+         
+         
+         
+         function build_friends_kml(){
+ 		    var mapheader = '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2" ';
+		    mapheader += 'xmlns:gx="http://www.google.com/kml/ext/2.2">';
+		    mapheader += '<Document><name>Friend locations</name>';
+		    
+		    //first build all the styles for the friend icons
+		    for(var i = 0; i < friend_loc_count; i += 1){
+		    	mapheader += friend_style(i, friend_response.data[i].id, friend_response.data[i].name, friend_response.data[i][map_location].name);
+		    }
+		    //mapheader += '<Style id="t1158403"><LabelStyle><color>ffa8ff00</color><scale>0.75</scale></LabelStyle>';
+		    //mapheader += '<IconStyle><Icon><href>http://d1dhsh1i77j8ju.cloudfront.net/s0/f16/p27p27.png</href>';
+		    //mapheader += '<IconStyle><Icon><href>' + 'http://graph.facebook.com/' + target_id + '/picture</href>';
+		    //mapheader += '</Icon><scale>0.75</scale></IconStyle>';
+		    //mapheader += '<LineStyle><color>ff00ff00</color><colorMode>normal</colorMode><width>2</width>';
+		    
+		    //Now add all the placemarks
+		    for(var k = 0; k < friend_loc_count; k += 1){
+		    	mapheader += friend_placemark(k);
+		    }
+		    //mapheader += '</LineStyle><PolyStyle><color>7f00ff00</color></PolyStyle></Style><Placemark><name>';
+		 
+		    mapheader += '</Document></kml>';
+
+		    //walk through list of friends and add one icon and placemark for each
+		    //var mapstring = mapheader;
+			 //Build a new placemark for the friend
+
+		    //var mapstring = mapheader;
+	    	//mapstring += target_name + '</name><description></description><styleUrl>#t1158403</styleUrl>';
+	    	//mapstring += '<MultiGeometry><Point><altitudeMode>absolute</altitudeMode><coordinates>';
+	    	//Split the rtrackpos string and get the first point of the track
+	    	//rpoints = rtrackpos.split(' ');
+	    	//rfirstpoint = rpoints[0].split(',');
+	    	//mapstring += latlng.lng() + ',' + latlng.lat();
+	    	//mapstring += '</coordinates></Point>';
+	    	//mapstring += '<altitudeMode>absolute</altitudeMode><coordinates>';
+	    	//Add all the saved points for the track
+	    	//mapstring += rtrackpos;
+	    	//mapstring += '</MultiGeometry>';
+	    	//mapstring += mapfooter;
+		    
+	        built_track = ge.parseKml(mapheader);
+	        ge.getFeatures().appendChild(built_track);
+		    
+		    
+         }
+         
+         var baretour;
+         function build_fbphotos_kml(){
+   		    var mapheader = '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2" ';
+  		    mapheader += 'xmlns:gx="http://www.google.com/kml/ext/2.2">';
+  		    mapheader += '<Document><name>Photo locations</name>';
+  		    
+  		    psel_table = '<table><tr>';
+  		    
+  		    //first build all the styles for the friend icons
+  		    for(var i = 0; i < locphotos.length; i += 1){
+  		    	var location_text;
+  		    	//if(locfriends[i][map_location] != null){
+  		    	//	location_text = locfriends[i][map_location].name;
+  		    	//}else{
+  		    	//	location_text = '';
+  		    	//}
+  		    	mapheader += fbphoto_style(locphotos[i].object_id, locphotos[i].caption, locphotos[i].src_small, locphotos[i].src_big, locphotos[i].link, locphotos[i].src_big_width, locphotos[i].src_big_height, locphotos[i]["place_id"]);
+  		    	
+  		    	//Build the table that allows users to select photos
+  		    	psel_table += '<td><img src="' + locphotos[i].src + '"></img>';
+  		    	psel_table += '<input id="fcb_' + locphotos[i].object_id + '" type="checkbox" value="" checked="true" onclick="photo_sel(' + locphotos[i].object_id + ')"></input></td>';
+  		    }
+  		    
+  		    //Now add all the placemarks
+  		    //and build the list of friends
+
+ 		 	  		    //add the tour to the kml
+ 		 	            var tourheader = '<gx:Tour><name>test</name><gx:Playlist>';
+ 		 	    
+ 		 	            var tourfooter = '</gx:Playlist></gx:Tour>';
+ 		 	  		    var tourstring = tourheader;
+  		    for(var k = 0; k < locphotos.length; k += 1){
+ 		            	//locations.push(data[i].current_location.id);        		            			
+ 		 		    	mapheader += fbphoto_placemark(locphotos[k].object_id, locphotos[k]["place_id"]);
+ 		 	        	tourstring += buildFlyTo(locphotos[k]["place_id"], locphotos[k]["place_id"], 70, 5, locphotos[k].object_id);
+
+  		    }
+
+  		    tourstring += tourfooter
+  		    psel_table += '</tr></table>';
+  		    //Close the table
+  		    //friend_list += '</tr></table>';
+  		    //add controls
+  		    //write the table to the page
+  		    el('photo_list').innerHTML = psel_table;
+  		    //mapheader += '</LineStyle><PolyStyle><color>7f00ff00</color></PolyStyle></Style><Placemark><name>';
+  		    
+  		    
+
+  		    mapheader += tourstring
+  		    mapheader += '</Document></kml>';
+
+  		    
+  	        built_photos = ge.parseKml(mapheader);
+  	        ge.getFeatures().appendChild(built_photos);
+  	        
+  	        //now add the tour to the player
+    	    walkKmlDom(built_photos, function() {
+    	    	if (this.getType() == 'KmlTour') {
+    	    		baretour = this;
+    	    	}
+    	    }, {features: true, geometries: true});
+
+  	        
+  	         ge.getTourPlayer().setTour(baretour);
+  	         
+  	         if(first_saved_play){
+  	        	first_saved_play = false;
+  	        	ge.getTourPlayer().play();
+  	         }
+  	         //ge.getTourPlayer().play();
+  	        
+           }
+
+         var photo_data = [];
+         var ph_in = 'in(SELECT uid2 FROM friend WHERE uid1 = me())';
+         
+         
+         var friend_offset = 0;
+         function build_photo_friend_list(){
+        	 
+        	 //first get rid of the old friend list and display a message that we're working
+        	 //el('friend_list').innerHTML = "Retrieving Friend Photo Locations"
+        	 //now execute the fql to get friends photos and locations
+        	                //var offset = 0;
+        		            FB.api({method: 'fql.query',
+        		            	    query: 'SELECT object_id,  owner from photo where aid in (select aid FROM album WHERE owner = ' + locfriends[friend_offset].uid + ') and place_id != \'\''
+        		            	    },
+        		            	    function(data_loc){
+        		            	    	//offset += 200;
+        		            	    	if(data_loc.length != 0){
+            		            	    	//photo_data = photo_data.concat(data_loc);
+            		            	    	
+            		            	    	//Update the photo count per suer
+            		            	    	for(var k = 0; k < data_loc.length; k += 1){
+            		            	    		if(photo_count[data_loc[k].owner] == null){
+            		            	    			photo_count[data_loc[k].owner] = 1;
+            		            	    		}else{
+                		            	    		photo_count[data_loc[k].owner] += 1; 
+            		            	    		}
+            		            	    	}
+        		            	    	create_friend_photo_list(false);
+        		            	    	}
+        		            	    	
+        		            	    	friend_offset += 1;
+        		            	    	if(friend_offset != locfriends.length){
+        		            	    		//call this function recursively to get the next friend
+        		            	    		//first, dump all the returned data to lower memory footprint
+        		            	    		for(var m = 0; m < data_loc.length; m += 1){
+        		                   			 delete data_loc[m];
+        		            	    		}
+        		            	    		
+        		            	    		build_photo_friend_list();
+        		            	    	}else{
+        		            	    		create_friend_photo_list(true);
+        		            	    	}
+        		            	    	
+
+
+        		            	    });
+        	 
+        	 
+         }
+
+         function build_photo_friend_list3(offset){
+        	 
+        	 //first get rid of the old friend list and display a message that we're working
+        	 //el('friend_list').innerHTML = "Retrieving Friend Photo Locations"
+        	 //now execute the fql to get friends photos and locations
+        	                //var offset = 0;
+        		            FB.api({method: 'fql.query',
+        		            	    query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, src_big_width, src_big_height, caption from photo where aid in (select aid FROM album WHERE owner in(SELECT uid2 FROM friend WHERE uid1 = me())) and place_id != \'\' order by owner limit 200 offset ' + offset
+        		            	    },
+        		            	    function(data_loc){
+        		            	    	//offset += 200;
+        		            	    	photo_data = photo_data.concat(data_loc);
+        		            	    	
+        		            	    	//Update the photo count per suer
+        		            	    	for(var k = 0; k < data_loc.length; k += 1){
+        		            	    		if(photo_count[data_loc[k].owner] == null){
+        		            	    			photo_count[data_loc[k].owner] = 1;
+        		            	    		}else{
+            		            	    		photo_count[data_loc[k].owner] += 1; 
+        		            	    		}
+        		            	    	}
+        		            	    	
+        		            	    	//Now update the list of users and call this function again
+        		            	    	//if necessary
+        		            	    	//create_friend_photo_list();
+        		            	    	if(data_loc.length != 200){
+        		            	    		create_friend_photo_list(true);
+        		            	    	}else{
+        		            	    		build_photo_friend_list(offset + 200);
+        		            	    		create_friend_photo_list(false);
+        		            	    	}
+        		            	    	
+        		            	    	//now get the users photos
+        		                        //FB.api({method: 'fql.query',
+        		            	        //        query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, caption from photo where aid in (select aid FROM album WHERE owner = me()) and place_id != \'\''
+        		            	        //       },
+        		            	        //       function(data_loc){
+        		            	    	//       photo_data = data_loc.concat(photo_data);
+               		            	    //	   create_friend_photo_list();
+        		            	        //       });
+
+
+        		            	    });
+        	 
+        	 
+         }
+         
+         function build_photo_friend_list2(frid_str){
+        	 
+        	 //first get rid of the old friend list and display a message that we're working
+        	 el('friend_list').innerHTML = "Retrieving Friend Photo Locations"
+        	 //now execute the fql to get friends photos and locations
+        		            FB.api({method: 'fql.query',
+        		            	    query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, src_big_width, src_big_height, caption from photo where aid in (select aid FROM album WHERE owner ' + frid_str + ')'
+        		            	    },
+        		            	    function(data_loc){
+        		            	    	photo_data = data_loc;
+        		            	    	
+        		            	    	//now get the users photos
+        		                        FB.api({method: 'fql.query',
+        		            	                query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, caption from photo where aid in (select aid FROM album WHERE owner = me()) and place_id != \'\''
+        		            	               },
+        		            	               function(data_loc){
+        		            	    	       photo_data = data_loc.concat(photo_data);
+               		            	    	   create_friend_photo_list();
+        		            	               });
+
+
+        		            	    });
+        	 
+        	 
+         }
+         
+         function build_photo_friend_tour(frid){
+        	 
+        	 //first get rid of the old friend list and display a message that we're working
+        	 //el('friend_list').innerHTML = "Retrieving Friend Photo Locations"
+        	 //now execute the fql to get friends photos and locations
+        		            FB.api({method: 'fql.query',
+        		            	    query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, src_big_width, src_big_height, caption from photo where aid in (select aid FROM album WHERE owner = ' + frid + ') and place_id != \'\''
+        		            	    },
+        		            	    function(data_loc){
+        		            	    	//for(var k = 0; k < data_loc.length; k += 1){
+        		            	    		//if(data_loc[k].place_id == null){
+        		            	    			//Give the photo the location of the owner
+        		            	    		//	data_loc[k].place_id = friend_place_id[frid];
+        		            	    		//}
+        		            	    	//}
+        		            	    	
+        		            	    	photo_data = data_loc;
+        		            	    	get_photos(frid);
+
+        		            	    });
+        	 
+        	 
+         }
+
+         var photo_count = new Array;
+    function create_friend_photo_list(complete){
+
+ 		    //first count the number of photos for each friend
+	    	//for(var k = 0; k < locfriends.length; k += 1){
+	    	//  var search_id = locfriends[k].uid;
+	    	//  var search_count = 0;
+	    	//  for(var m = 0; m < photo_data.length; m += 1){
+	    //		  if(photo_data[m].owner == search_id){
+	    	//		  search_count += 1;
+	    	//		  photo_count[search_id.toString()] = search_count;
+	    //		  }
+	    	//  }
+	    	//}
+ 		    var friend_list = '';
+            if(!complete){
+           	   friend_list = 'Retrieving Friend Photo Locations... Completed ' + friend_offset + ' of ';
+           	   friend_list += locfriends.length + ' located friends';
+            }
+	    	//now create the friend list
+ 		    friend_list += '<table style="width:100%; table-layout:fixed"><tr>';
+	    	for(var k = 0; k < locfriends.length; k += 1){
+ 		    	//only map friends with defined locations
+ 		    	
+ 		    	
+ 		    	if(photo_count[locfriends[k].uid] != null){
+		            	//locations.push(data[i].current_location.id);        		            			
+		 	        	//List all the friends that can be placed in static maps
+		 	        	//friend_list += '<td style="width:33%" align="left"><input id="fcb_' + k + '" type="checkbox" value="" onclick="static_friend(' + k + ')"></input>';
+		 	        	friend_list += '<td style="width:33%" align="left"><a href="javascript:void(0);" onclick="$(\'slidedown_demo\').hide(); get_photos(' + locfriends[k].uid + ');">';
+		 	        	friend_list += '<img src="http://graph.facebook.com/' + locfriends[k].uid + '/picture"></img>';
+		 	        	friend_list += locfriends[k].name
+		 	        	if(photo_count[locfriends[k].uid] != null){
+		 	        		friend_list += ' ' + photo_count[locfriends[k].uid.toString()] + ' ';
+		 	        	}
+		 	        	friend_list += '</td>';
+		 	        	friend_list_count += 1;
+		 	        	if((friend_list_count)%3 == 0){
+		 	        		friend_list += '</tr><tr>'
+		 	        	}
+	    	    }
+ 		    }
+ 		    //Close the table
+ 		    friend_list += '</tr></table>';
+ 		    //add controls
+ 		    //write the table to the page
+ 		    el('friend_list').innerHTML = friend_list;
+    }         
+
+    
+    var first_saved_play = false;
+    
+    function build_fbfriends_kml(){
+  		    var mapheader = '<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2" ';
+ 		    mapheader += 'xmlns:gx="http://www.google.com/kml/ext/2.2">';
+ 		    mapheader += '<Document><name>Friend locations</name>';
+ 		    
+ 		    //first build all the styles for the friend icons
+ 		    for(var i = 0; i < locfriends.length; i += 1){
+ 		    	var location_text;
+ 		    	if(locfriends[i][map_location] != null){
+ 		    		location_text = locfriends[i][map_location].name;
+ 		    	}else{
+ 		    		location_text = '';
+ 		    	}
+ 		    	mapheader += fbfriend_style(locfriends[i].uid, locfriends[i].name, location_text);
+ 		    }
+ 		    
+ 		    //Now add all the placemarks
+ 		    //and build the list of friends
+ 		    friend_list = '<table style="width:100%; table-layout:fixed"><tr>';
+ 		    friend_list_count = 0;
+ 		    
+	        	friend_list += '<td style="width:33%" align="left"><a href="javascript:void(0);" onclick="$(\'slidedown_demo\').hide(); build_photo_friend_tour(' + login_user + ');">';
+ 	        	friend_list += '<img src="http://graph.facebook.com/' + login_user + '/picture"></img>';
+ 	        	friend_list += login_name + '</td>';
+ 	        	friend_list_count += 1;
+ 		    for(var k = 0; k < locfriends.length; k += 1){
+ 		    	//only map friends with defined locations
+            	if(locfriends[k][map_location] != null){
+            		if(locfriends[k][map_location].id != undefined){
+		            	//locations.push(data[i].current_location.id);        		            			
+		 		    	mapheader += fbfriend_placemark(locfriends[k].uid, locfriends[k][map_location].id);
+		 	        	//List all the friends that can be placed in static maps
+		 	        	friend_list += '<td style="width:33%" align="left"><a href="javascript:void(0);" onclick="$(\'slidedown_demo\').hide(); build_photo_friend_tour(' + locfriends[k].uid + ');">';
+		 	        	friend_list += '<img src="http://graph.facebook.com/' + locfriends[k].uid + '/picture"></img>';
+		 	        	friend_list += locfriends[k].name + '</a></td>';
+		 	        	friend_list_count += 1;
+		 	        	if((friend_list_count)%3 == 0){
+		 	        		friend_list += '</tr><tr>'
+		 	        	}
+
+            		}
+            	}
+ 		    }
+ 		    //Close the table
+ 		    friend_list += '</tr></table>';
+ 		    //add controls
+ 		    //write the table to the page
+ 		    //el('friend_list').innerHTML = friend_list;
+ 		    //mapheader += '</LineStyle><PolyStyle><color>7f00ff00</color></PolyStyle></Style><Placemark><name>';
+ 		 
+ 		    mapheader += '</Document></kml>';
+
+ 		    
+ 	        built_track = ge.parseKml(mapheader);
+ 	        ge.getFeatures().appendChild(built_track);
+ 	        
+ 	        //Now, if there is a saved tour, play it
+ 	        //alert('found saved tour for ' + saved_friend_id)
+ 	        if(saved_friend_id != ''){
+ 	           //alert('Saw saved friend ' + saved_friend_id)
+ 	 	       get_photos(saved_friend_id);
+ 	           
+ 	           //Only auto play the first saved tour
+ 	           first_saved_play = true;
+ 	 	       //ge.getTourPlayer().play();
+ 	        }
+          }
+         
+         function static_friend(index){
+        	 //get the status of the checbox
+        	 if(el('fcb_' + index).checked && statmap_count < 5){
+        		 statmap[index.toString()] = 1;
+        		 statmap_count += 1;
+        	 }
+        	 else if(el('fcb_' + index).checked && (statmap_count >= 5)){
+        		 el('fcb_' + index).checked = false;
+        	 }
+        	 if(!el('fcb_' + index).checked){
+        		 if(statmap[index.toString()] != null){
+        			 delete statmap[index.toString()];
+        			 statmap_count -= 1;
+        		 }
+        	 }
+         }
+         
+         var friend_loc_count = 0;
+         function begin_map_friend(  ){
+        	 //FB.api('/' + userid, end_map_friend);  
+        	 //end_map_friend();
+        	     friend_loc_count = 3;
+        		 if(friend_count != friend_loc_count){
+        		   if(friend_response.data[friend_count].location != null){
+        			   if(friend_response.data[friend_count].location.name != null){
+            			   geocoder = new GClientGeocoder();
+            			   geocoder.getLatLng(friend_response.data[friend_count].location.name, function(latlng){
+            				  	  friend_locs[friend_count] = latlng;
+           		        		  friend_count += 1;
+            					  //begin_map_friend();
+            			   });
+        			   }else{
+  				  	      friend_locs[friend_count] = null;
+		        		  friend_count += 1;
+    					  //begin_map_friend();        			   
+        			   }
+        		   }else{
+ 				  	      friend_locs[friend_count] = null;
+		        		  friend_count += 1;
+    					  //begin_map_friend();
+        			   
+        		   }
+        		 }else{
+                	 //el('map_friends').disabled = false;
+                	 //build the set of kml placemarks for the globe
+                	 build_friends_kml();
+        		 }
+        		 
+        	 //}
+         }
+         
+         function end_map_friend(){
+    	     if(friend_response.data[friend_count].location != null){
+    		     //set the second placemarker at the user's location
+      		     set_map_target(friend_response.data[friend_count].location.name, friend_response.data[friend_count].id, friend_response.data[friend_count].name);
+       	     }else{
+        	 	 friend_count = friend_count + 1;
+        		 if(friend_count != friend_response.data.length){
+        			 //begin_map_friend();
+        		 }else{
+        			 el('map_friends').disabled = false;
+        		 }
+       	    	 
+       	    	 
+       	     }
+        	 //alert('landed in end_locate_friend');
+         }
+         
+         var saved_friend_id = '{{tour.friendid}}';
+         var saved_photo_string = '{{tour.photostring}}';
+         
+         function save_tour(){
+         	//Save the basics of the hit so the shot can be recreated
+         	   //alert('Setting up request');
+         	   //Remove all mapped calls before indices change
+         	   var tour_params = "phototour=" + encodeURIComponent('save') +
+         	             "&userid=" + encodeURIComponent(login_user) +
+         	             "&friendid=" + encodeURIComponent(friend_to_save) + 
+         	             "&photostring=" + encodeURIComponent(photo_string);
+         	   //alert('url is ' + url);
+                //Now send the scores to the db
+                if (typeof XMLHttpRequest != "undefined") {
+                    req = new XMLHttpRequest();
+                } else if (window.ActiveXObject) {
+                    req = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                
+                req.open("POST", '/fbapps/mapmyfriends', true);
+                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                req.setRequestHeader("Content-length", tour_params.length);
+                req.setRequestHeader("Connection", "close");
+
+                req.onreadystatechange = storetour_cb;
+                req.send(tour_params);
+
+         	//in the receive code, present the keyed link to the user so they can send it to others
+         	//who can replay the shot
+         	
+         	
+         }
+
+         function storetour_cb(){
+             if (req.readyState == 4) {
+                 if (req.status == 200) {
+                       //alert('Entered et_cb with ' + req.responseText);
+                 	  var tour_base = 'http://apps.facebook.com/cfmapmyfriends?tour=';
+                 	  tour_link = tour_base + req.responseText;
+                 	  tour_msg = 'Your saved tour will appear on your action log and can be ';
+                 	  tour_msg += 'accessed <a href="' + tour_base + req.responseText;
+                 	  tour_msg += '">here</a>';
+                 	  //el('msg_here').innerHTML = tour_msg;
+                 	  
+                 	  //Effect.SlideDown('msg_div');
+
+                 	  //post the facebook watch action for this tour
+                 	  var fb_app_action = 'http://copaseticflows.appspot.com/fbapps/mapmyfriends?tour=' + req.responseText;
+                 	  //fb_app_action += '&tags={"' + friend_to_save.toString() + '"}'
+                      FB.api(
+                              '/me/cfmapmyfriends:play',
+                              'post',
+                              { photo_tour: fb_app_action },
+                              function(response) {
+                                 if (!response || response.error) {
+                                    //alert('Error occured ' + response.error.message);
+                                 } else {
+                                    //alert('Log was successful! Action ID: ' + response.id);
+                                 }
+                              });
+                 	  
+                 	  //Let the user post the tour to their wall
+                    	    var app_link = 'http://apps.facebook.com/cfmapmyfriends/?tour=' + req.responseText;
+                 	        var act_name = 'Watched ' + getnamefromid(friend_to_save.toString()) + '\'s photos on Google Earth';
+                    	    var media = [
+                    	        	{
+                    	        		type: 'image',
+                    	        		src: 'http://copaseticflows.appspot.com/img/mapmyfriends200.jpg',
+                    	        		href: app_link
+                    	        	}
+                    	        ];
+                    	    var attachment = {
+                    	        name:  act_name,
+                    	        href: app_link,
+                    	        caption: 'Watching photos on Google Earth',
+                    	        media: media
+                    	    }
+                    	FB.ui(
+                    	   {
+                    	     method: 'stream.publish',
+                    	     attachment: attachment
+                    	   }
+                    	  );
+                 	  
+                 	  
+                 	  //alert(tour_link);
+                       //el('munitions').innerHTML = 'Saved tour link:<br><a href="' + tour_base + 
+                        //                            req.responseText + '">' + tour_base + req.responseText + '</a>';
+                   	//hit_fb(game_link);
+                       //Setup the sharing buttons
+                       //share_tour(tour_link);
+          	    
+
+                 }
+                 else{
+                   alert('storetour reqeust failed ' + req.status + ' ' + req.responseText);
+                 }
+             }
+                 
+         }
+         
+         function getnamefromid(userid){
+        	 for(var k = 0; k < locfriends.length; k += 1){
+        		 if(userid == locfriends[k].uid){
+        			 return locfriends[k].name;
+        		 }
+        	 }
+        	 return '';
+         }
+         
+         function begin_locate_friend( userid ){
+        	 //ask for the friends location
+        	 FB.api('/' + userid, end_locate_friend);        	 
+         }
+         
+         function end_locate_friend(response){
+        	 if(response.location == null){
+        		 alert('Sorry, there is no location for this user');
+        	 }
+        	 if(response.location.name == null){
+        		 alert('Sorry, there is no location for this user');
+        	 }
+        	 else{
+        		 //set the second placemarker at the user's location
+        		 set_target(response.location.name, response.id, response.name);
+        	 }
+        	 //alert('landed in end_locate_friend');
+         }
+         
+         function name_sort(a,b){
+             //[sindex, sname, pindex, startdate, enddate, elev, first_step, last_step]
+             var nameA=a.name.toLowerCase();
+             var nameB=b.name.toLowerCase();
+              if (nameA < nameB){ //sort string ascending
+                  return -1 ;
+              }
+                  if (nameA > nameB){
+                      return 1;
+                  }
+                  return 0; //default return value (no sorting)         	return b.name - a.name;
+         }
+         
+</script> 
+</body> 
+</html>

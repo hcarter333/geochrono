@@ -2,16 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
-  <title>Map My Friends</title> 
+  <title>GeoChrono</title> 
     <meta name="KEYWORDS" content="facebook app, map, globe"> 
     <meta name="DESCRIPTION" content="Map your friends' locations on Google Earth. Watch tours of their photos on Gooogle Earth"> 
- <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# cfmapmyfriends: http://ogp.me/ns/fb/cfmapmyfriends#">
-  <meta property="fb:app_id" content="431947063491624" /> 
-  <meta property="og:type"   content="cfmapmyfriends:photo_tour" /> 
-  <meta property="og:url"    content="http://apps.facebook.com/cfmapmyfriends?tour={{key}}" /> 
-  <meta property="og:title"  content="Photo Tour" /> 
-  <meta property="og:image"  content="http://copaseticflows.appspot.com/img/mapmyfriends200.jpg" />
-  <meta property="cfmapmyfriends:friend" content="{{tour.friendid}}" />
   
 <script type="text/javascript">
 
@@ -34,11 +27,11 @@
   <script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAxA4KfHbJOx5n7ISnjtWoORSk1yabMBTVKczv7l6oYTWc2Pb9NBTSCbfB9wfQBQDTFCTdHNLce6jrOg"></script> 
   <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAxA4KfHbJOx5n7ISnjtWoORSk1yabMBTVKczv7l6oYTWc2Pb9NBTSCbfB9wfQBQDTFCTdHNLce6jrOg" type="text/javascript"></script>
   <script src="http://earth-api-samples.googlecode.com/svn/trunk/lib/kmldomwalk.js" type="text/javascript"></script>
-  <script type="text/javascript" src="/jscript/main_bang19.js"></script> 
   <script type="text/javascript" src="/jscript/sat_bang2.js"></script> 
   <script type="text/javascript" src="/jscript/utils.js"></script> 
   <script type="text/javascript" src="/jscript/sdg4sdp4.js"></script> 
   <script type="text/javascript" src="/jscript/extensions-0.2.1.js"></script>
+  <script type="text/javascript" src="/geochrono/js/geochrono.js"></script> 
   <script type="text/javascript"> 
   //<![CDATA[
     google.load('earth', '1', {'other_params': 'sensor=false' });
@@ -89,8 +82,8 @@
       ge = object;
       //Instead of starting here, call my_sat_test to substitue in the test data
       //getFile('grabTLE.php?tle=iridium-33-debris,cosmos-2251-debris');
-      //my_sat_test();
-      my_friendmap_test();
+      my_sat_test();
+      //my_friendmap_test();
 
       //bang_begin();
       //If you get here before ther is a user then don't init the user canon yet
@@ -98,35 +91,18 @@
       //if(user_location != ''){
     //	  set_cannon(user_location);
       ///}
-     if(fb_init){
+     //if(fb_init){
      	 //if(friend_count != friend_response.data.length){
      	 // 	   //begin_map_friend();
      	 // 	 }
-     	 test_fql();
-     }
+     //	 test_fql();
+     //}
      
      
 
     
     }
 
-    function initCBl(object)
-    {
-      gel = object;
-      //Instead of starting here, call my_sat_test to substitue in the test data
-      //getFile('grabTLE.php?tle=iridium-33-debris,cosmos-2251-debris');
-      my_sat_test_l();
-      //bang_begin();
-    }
-
-    function initCBr(object)
-    {
-      ger = object;
-      //Instead of starting here, call my_sat_test to substitue in the test data
-      //getFile('grabTLE.php?tle=iridium-33-debris,cosmos-2251-debris');
-      my_sat_test_r();
-      //bang_begin();
-    }
     
     
     
@@ -135,8 +111,8 @@
       var windowwidth = document.body.clientWidth;  // IE 7 & 8
       if (window.innerHeight){windowheight = window.innerHeight} // Firefox
       if (window.innerWidth){windowwidth = window.innerWidth} // Firefox
-      if (windowheight < 3026)  el("map3d_container").style.height = (windowheight-(25+55+90))+"px";
-      if (windowheight < 3026)  el("map3d").style.height = (windowheight-(25+55+90))+"px";
+      if (windowheight < 3026)  el("map3d_container").style.height = (windowheight-(75+55+90))+"px";
+      if (windowheight < 3026)  el("map3d").style.height = (windowheight-(75+55+90))+"px";
       //if (windowheight < 3026)  el("map3dl").style.height = (windowheight-(25+90+90))+"px";
       //if (windowheight < 3026)  el("map3dr").style.height = (windowheight-(25+90+90))+"px";
       //if (windowheight < 3026)  el("passes_container").style.height = (windowheight-(25+90+90))+"px";
@@ -314,7 +290,7 @@ background-color:#ffffff;
 <body id='body' onload='init()'  onunload='//google.earth.removeEventListener(ge, "frameend", tick);' style="background-color:#111111; padding-right:50px ; padding-left:50px; y-overflow:auto"> 
 <link type="text/css" rel="stylesheet" href="/jscript/headerhelp.css" />
 
-
+<div id='applogo'><h3>GeoChrono: Where were they when? Add spiffy logo of earth with a clock here at some point</h3></div>
     <div id='gad'>
         <script type="text/javascript"><!--
 google_ad_client = "ca-pub-6583317371769852";
@@ -333,14 +309,13 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
                 <div class="fb-like" data-href="http://apps.facebook.com/cfmapmyfriends" data-send="true" data-layout="button_count" data-width="250" data-show-faces="false" data-colorscheme="dark"></div>
         
         </div> 
-        <div id='about'><a target="_blank" href="http://www.facebook.com/cfmapmyfriends">Fan Page</a> 
-        <a target="_blank" href="http://copaseticflows.appspot.com/examhelp/acf.html">About the Author</a>
-        <input id="get_passes" type="button" value="Create Photo Tour" onclick="Effect.SlideDown('slidedown_demo'); return false;"></input>
-        <input id="save_tour" type="button" value="Share Tour" onclick="save_tour()"></input>
+        <div id='about'><!--<a target="_blank" href="http://www.facebook.com/cfmapmyfriends">Fan Page</a> -->
+        <a target="_blank" href="hhttps://github.com/hcarter333/geochrono">About the Project</a>
+        <input id="get_passes" type="button" value="Enter History List" onclick="Effect.SlideDown('slidedown_demo'); return false;"></input>
+        <!-- <input id="save_tour" type="button" value="Share Tour" onclick="save_tour()"></input> -->
         <!-- <input id="get_passes" type="button" value="Choose Photos" onclick="Effect.SlideDown('photo_slidedown'); return false;"></input> -->
-        <input id="map_type" type="button" value="Map Hometowns" onclick="changeMap();"></input>
-        <a href="javascript:void(0)" 
-        onclick="javascript:FB.ui({method: 'apprequests', message: 'Map the current location and hometowns of your friends.', title:'Invite your friends.'});">Invite Friends</a>
+        <!--  <input id="map_type" type="button" value="Map Hometowns" onclick="changeMap();"></input> -->
+
         </div>
         <div id='date'></div>
         <div id='pass_button'></div> 
@@ -367,7 +342,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   </div>
 </div>
 <div id="slidedown_demo" style="display:none; width:100%; height:240px; background:#000000; text-align:center;">
-  <div>Click on a friend to create a tour of their photos.</div>
+  <div>Rework this to contain the textarea control</div>
   <div id="friend_list" style="height:80%; width:100%; overflow:scroll;">
     This is some test content. This is some test content.
     <input type="checkbox" value="" onclick="testcheck()"></input>
@@ -416,408 +391,43 @@ var reqfb;
 
 //test id 237308279707654
 //release id 431947063491624
-FB.init({appId: '431947063491624', status: true, cookie: true,
-    xfbml: true});
+//FB.init({appId: '431947063491624', status: true, cookie: true,
+//    xfbml: true});
 //Listen for the user to login and then customize
-FB.Event.subscribe('auth.login', function(response) {
+//FB.Event.subscribe('auth.login', function(response) {
   // do something with response
-  fb_setup();
-});
+//  fb_setup();
+//});
 
 //If the user is already logged in and connected, then get rid of the login button
-FB.getLoginStatus(function(response) {
-  if (response.authResponse) {
+//FB.getLoginStatus(function(response) {
+//  if (response.authResponse) {
     // logged in and connected user, someone you know
-    fb_setup();
+//    fb_setup();
     
-  } else {
+//  } else {
     // no user session available, someone you dont know
     //fb_setup();
-  }
-}, true);
+//  }
+//}, true);
 
 
 
 
-function logComm( commentxid ){                      
-        //Now send the scores to the db
-        if (typeof XMLHttpRequest != "undefined") {
-            reqfb = new XMLHttpRequest();
-        } else if (window.ActiveXObject) {
-            reqfb = new ActiveXObject("Microsoft.XMLHTTP");
-        }
 
-        var comm_params = "xid=" +
-                      encodeURIComponent(commentxid);
-        
-        reqfb.open("POST", '/fbcomm', true);
-        reqfb.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        reqfb.setRequestHeader("Content-length", comm_params.length);
-        reqfb.setRequestHeader("Connection", "close");
-
-        
-        reqfb.onreadystatechange = comm_cb;
-        reqfb.send(comm_params);
-}
-
-function comm_cb(){
-
-}
-
-FB.Event.subscribe('comments.add', function(response) {
-      //var msession = FB.getSession();
+//FB.Event.subscribe('comments.add', function(response) {
+//      //var msession = FB.getSession();
       //alert('Comment usera:' + response.widget._attr.xid);
-      logComm(response.widget._attr.xid);
-    });    
+//      logComm(response.widget._attr.xid);
+//    });    
 
          
-var user_location = '';        
-         function fb_setup(){
-           FB.api('/me', function(user) {
-             if(user != null) {
-                //document.getElementById('fblogin').innerHTML = '';
-                //alert(user.name);
-                //var image = document.getElementById('fbimage');
-                //image.src = 'http://graph.facebook.com/' + user.id + '/picture';
-                //image.innerHTML = '<img src="http://graph.facebook.com/' + user.id + '/picture' + '">';
-                //var name = document.getElementById('fbname');
-                //name.innerHTML = user.name
-                login_user = user.id;
-                login_name = user.name;
-                if(user.location.name != null){
-                	//set_cannon(user.location.name);
-                	//user_location = user.location.name;
-                	//If you arrive here after the map is initialized, then setup the user canon
-                	//if(earth_init){
-                	//  set_cannon(user_location);
-                	//}
-                }
-                friend_targets();
-             }
-           });
-         }
-         
-         function friend_targets(){
-        	 FB.api('/me/friends?fields=name,location', friends_back);        	 
-        	 
-         }
          
          var friend_count = 0;
          var friends_locted = 0;
          var friend_response;
          //var fb_init = false;
          
-         function friends_back(response){
-        	 //walk list of friends.  print picture, name, and location
-        	 //alert('Landed in list of friends ', response);
-        	 //sort the friend list
-        	 response.data.sort(name_sort);
-        	 //html_list = 'Choose which friend to target';
-        	 //html_list += '<table>';
-        	 friend_response = response;
-        	 friend_loc_count = response.data.length;
-        	 //for(var i = 0; i < response.data.length; i += 1){
-        		 //html_list += '<tr><td><img src="http://graph.facebook.com/' + response.data[i].id + '/picture' + '">';
-        		 //html_list += '<a href="javascript:void(0)" onClick="begin_locate_friend(' + response.data[i].id + ')">';
-        		 //html_list += response.data[i].name + '</a></td></tr>';
-        	 //}
-        	 //html_list += '</table>';
-        	 //write the friend list to the div
-        	 //el('flist').innerHTML = html_list;
-        	 
-        	 friend_count = 0;
-        	 fb_init = true;
-        	 if(earth_init){
-        	   //begin_map_friend();
-        	   test_fql();
-        	 }
-         }
-         
-         var friend_locs = [];
-         
-         function friend_style(index, id, friendname, friend_location){
-        	 style = '<Style id="friend' + index + '"><IconStyle><Icon><href>http://graph.facebook.com/' + id + '/picture</href>';
-        	 style += '</Icon><scale>1.0</scale></IconStyle>';
-        	 style += '<BalloonStyle><bgColor>00000000</bgColor><text><![CDATA[<p style="background-color:#000000;color:#0000ff"><a style="color=#0000ff" target="_blank" href="http://www.facebook.com/' + id + '">';
-        	 style += friendname + '</a></br>' + friend_location + '</p>]]></text></BalloonStyle>';
-        	                       
-        	 style += '</Style>';
-        	 return style;
-         }
-         
-         function fbfriend_style(id, friendname, friend_location){
-        	 style = '<Style id="friend' + id + '"><IconStyle><Icon><href>http://graph.facebook.com/' + id + '/picture</href>';
-        	 style += '</Icon><scale>4.0</scale></IconStyle>';
-        	 style += '<BalloonStyle><bgColor>00000000</bgColor><text><![CDATA[<p color="#0000ff"><a color="#0000ff" target="_blank" href="http://www.facebook.com/' + id + '">';
-        	 style += friendname + '</br>' + friend_location + '</a></p>]]></text></BalloonStyle>';
-        	                       
-        	 style += '</Style>';
-        	 return style;
-         }
-
-         function photo_loc_name(place_id){
-        	 var placestring = '';
-        	 //If there's not a city name, then just return the location name
-        	 if(photo_locs_all[place_id].location.city == null)
-        		 {
-        		 return photo_locs_all[place_id].name;
-        		 }
-        	 if(photo_locs_all[place_id].name.indexOf(photo_locs_all[place_id].location.city) == -1){
-        		 placestring = photo_locs_all[place_id].name;
-        		 placestring += ', ' + photo_locs_all[place_id].location.city;
-        		 //check for state or country
-        		 if(photo_locs_all[place_id].location.state != null){
-        		   placestring += ', ' + photo_locs_all[place_id].location.state;
-        		 }
-        		 else if(photo_locs_all[place_id].location.country != null){
-          		   placestring += ', ' + photo_locs_all[place_id].location.country;
-        		 }
-        	 }
-            return placestring;
-         }
-         
-         function fbphoto_style(id, caption, small, big, link, wide, high, place_id){
-        	 style = '<Style id="photo' + id + '"><IconStyle><Icon><href>' + small + '</href>';
-        	 style += '</Icon><scale>4.0</scale></IconStyle>';
-        	 style += '<BalloonStyle><bgColor>00000000</bgColor><textColor>ffffffff</textColor><text>';
-        	 //determine if the name is the city or not
-        	 style += '<![CDATA[<p color="#0000ff">'+ photo_loc_name(place_id) + '</br>';
-        	 style += '<img width="300px" height="' + parseInt(high*(300/wide)) + 'px" src="' + big + '"></img></br>'+ caption;
-        	 style += '</br><a color="#0000ff" target="_blank" href="' + link + '">';
-        	 style += 'photo facebook page</br></a></p>]]></text></BalloonStyle>';
-        	                       
-        	 style += '</Style>';
-        	 return style;
-         }
-
-         function friend_placemark(index){
-        	 var place = '';
-        	 if(friend_locs[index] != null){
-        	   latlng = friend_locs[index]; 
-        	   place = '<Placemark><name></name><description></description><styleUrl>#friend' + index + '</styleUrl>';
-        	   place += '<MultiGeometry><Point><altitudeMode>absolute</altitudeMode><coordinates>';
-        	   place += latlng.lng() + ',' + latlng.lat() + '</coordinates></Point></MultiGeometry></Placemark>';
-        	   
-        	 }else{
-        		 test = 3;
-        	 }
-        	 return place;
-         }
-         
-         var lastplace = null;
-         function buildFlyTo(firstplace, secondplace, tilt, delay, photoid){
-           	var flyto = '';
-           	var repor = '';
-        	if(firstplace != lastplace){
-              	var flyto = '<gx:FlyTo><gx:duration>' + delay + '</gx:duration><gx:flyToMode>bounce</gx:flyToMode><LookAt>';
-                var repos = '<gx:FlyTo><gx:duration>3</gx:duration><gx:flyToMode>smooth</gx:flyToMode><LookAt>';
-              	//get the heading between the two points
-                  secondlat = photo_locs_lat[firstplace];
-              	secondlong = photo_locs_lng[firstplace];
-            
-          	//if this is a new place
-          	    flyto += '<longitude>' + secondlong + '</longitude>';
-          	    flyto += '<latitude>' + secondlat + '</latitude>';
-          	    	flyto += '<range>' + 1000 + '</range><altitudeMode>clampToGround</altitudeMode>';
-              	//flyto += '<heading>' + viewh + '</heading>';
-              	flyto += '<tilt>' + tilt + '</tilt>';
-              	//Setup the gx:FlyTo footer
-              	flyto += '</LookAt></gx:FlyTo>';
-          	}
-          	
-          	
-          	//reposition the camera
-      	    repos += '<longitude>' + secondlong + '</longitude>';
-      	    repos += '<latitude>' + secondlat + '</latitude>';
-      	    repos += '<range>' + 1000 + '</range><altitudeMode>clampToGround</altitudeMode>';
-          	repos += '<tilt>' + 89.5 + '</tilt>';
-          	repos += '</LookAt></gx:FlyTo>';
-          	
-          	//flyto += repos;
-          	
-            flyto += fbphoto_activate(photoid);
-            
-            lastplace = firstplace;
-          	
-          	return flyto;
-
-          }
-         
-         function fbphoto_activate(uid){
-             var btext = '<gx:AnimatedUpdate><gx:duration>0.0</gx:duration><Update>';
-             btext += '<targetHref/><Change><Placemark targetId="photo_pm' + uid + '">';
-             btext += '<gx:balloonVisibility>1</gx:balloonVisibility></Placemark>';
-             btext += '</Change></Update></gx:AnimatedUpdate><gx:Wait><gx:duration>7.0</gx:duration></gx:Wait>';
-             
-             btext += '<gx:AnimatedUpdate><gx:duration>0.0</gx:duration><Update>';
-             btext += '<targetHref/><Change><Placemark targetId="photo_pm' + uid + '">';
-             btext += '<gx:balloonVisibility>0</gx:balloonVisibility></Placemark>';
-             btext += '</Change></Update></gx:AnimatedUpdate>';
-             
-             return btext;
-         }
-
-         function fbphoto_placemark(uid, place_id){
-        	 var place = '';
-        	   //latlng = friend_locs[index]; 
-        	   place = '<Placemark id="photo_pm' + uid + '"><name></name><description></description><styleUrl>#photo' + uid + '</styleUrl>';
-        	   place += '<MultiGeometry><Point><altitudeMode>absolute</altitudeMode><coordinates>';
-        	   place += photo_locs_lng[place_id] + ',' + photo_locs_lat[place_id] + '</coordinates></Point></MultiGeometry></Placemark>';
-        	   
-       		 test = 3;
-        	 return place;
-         }
-
-         function fbfriend_placemark(uid, place_id){
-        	 var place = '';
-        	   //latlng = friend_locs[index]; 
-        	   place = '<Placemark><name></name><description></description><styleUrl>#friend' + uid + '</styleUrl>';
-        	   place += '<MultiGeometry><Point><altitudeMode>absolute</altitudeMode><coordinates>';
-        	   place += friend_locs_lng[place_id] + ',' + friend_locs_lat[place_id] + '</coordinates></Point></MultiGeometry></Placemark>';
-        	   
-       		 test = 3;
-        	 return place;
-         }
-
-         var friend_locs_lng = new Array();
-         var friend_locs_lat = new Array();
-         var friend_place_id = new Array();
-         var locfriends = [];
-        
-         var friendid = '';
-         function test_fql(){
-        	 var locid = '';
-        	 var frid = '';
-             var locations = [];
-             var friendids = [];
-        	 FB.api(
-        		        {
-        		            method: 'fql.query',
-        		            query: 'SELECT uid, ' + map_location + ', name from user where uid in (select uid2 FROM friend WHERE uid1=me())'
-        		        },
-        		        function(data) {
-        		            //    do something with the response
-        		            test = 3;
-        		            locfriends = data;
-        		            
-        		            //get the necessary infomration for the user as well
-        		            FB.api({
-        		            	    method: 'fql.query',
-        		            	    query: 'SELECT uid, ' + map_location + ', name from user where uid = me()'
-        		            },
-        		            function(data){
-        		            	locfriends = data.concat(locfriends);
-
-        		            	//parse the result, and get the location ids
-            		            //then, get coordinates for the locations
-            		            for(var i = 0; i < locfriends.length; i += 1){
-                		            	if(locfriends[i][map_location] != null){
-                		            		if(locfriends[i][map_location].id != undefined){
-                        		            	locations.push(locfriends[i][map_location].id);  
-                        		            	friendids.push(locfriends[i].uid);
-            		            	    		friend_place_id[locfriends[i].uid.toString()] = locfriends[i][map_location].id;
-                		            		}
-                		            	}
-            		            }
-            		            for(var k = 0; k < locations.length; k += 1){
-        		            		locid += locations[k];
-        		            		frid += friendids[k];
-            		            	if(k != locations.length - 1){
-            		            		locid += ', ';
-            		            		frid += ', ';
-            		            	}
-            		            }
-            		            //Now execute a second query to get all the locations
-            		            //new_query = 
-            		            FB.api({method: 'fql.query',
-            		            	    query: 'SELECT page_id, location from page where page_id in (' + locid + ')'
-            		            	    },
-            		            	    function(data_loc){
-            		            	    	test = 33;
-            		            	    	//now finally, map everyones locations
-            		            	    	//put the coordinates in arrays
-            		            	    	for(var m = 0; m < data_loc.length; m += 1){
-            		            	    		friend_locs_lat[data_loc[m].page_id] = data_loc[m].location.latitude;
-            		            	    		friend_locs_lng[data_loc[m].page_id] = data_loc[m].location.longitude;
-            		            	    	}
-            		            	    	//now build and display the kml
-            		            	    	build_fbfriends_kml();
-            		            	    	
-            		            	    	//go find the geolocated friend photos
-            		            	    	build_photo_friend_list(0);
-
-            		            	    });
-        		            });
-        		        });        	 
-        	 
-         }
-         
-         var photo_locs_lng = new Array();
-         var photo_locs_lat = new Array();
-         var photo_locs_name = new Array();
-         var photo_locs_all = new Array();
-         var locphotos = [];
-         var friend_to_save;
-         var photo_string;
-
-         function get_photos(fp_id){
-             friend_to_save = fp_id;
-        	 RemoveAllFeatures();
-        	    var la = ge.createLookAt(''); 
-        	    la.set(39, -82, 0, ge.ALTITUDE_RELATIVE_TO_GROUND, 0, 0, 10000000); 
-        	    ge.getView().setAbstractView(la);     
-   
-        	 
-        	 var locid = '';
-             var locations = [];
-             locphotos.length = 0;
-             //don't need to query... stored all the data earlier in photo_data
-             //do need to query... some people have over 1000 pictures... slow down computer
-        		            FB.api({method: 'fql.query',
-        		            	    query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, src_big_width, src_big_height, caption from photo where aid in (select aid FROM album WHERE owner = ' + fp_id + ') and place_id != \'\''
-        		            	    },
-        		            	    function(data_loc){
-            		            	    	photo_data = data_loc;
-             
-        		             var loc_found = false;
-                             for(var k = 0; k < photo_data.length; k += 1){
-    		            		
-        		            	if(photo_data[k].owner == fp_id){
-        		            		if(loc_found){
-        		            			locid += ", ";
-        		            			photo_string += ', ';
-        		            		}
-        		            		loc_found = true;
-    		            			locphotos.push(photo_data[k]);
-            		            	locid += photo_data[k]["place_id"];
-            		            	photo_string += photo_data[k]["object_id"];
-            		            	//if(k != locations.length - 1){
-            		            	//	locid += ', ';
-            		            	//}
-    		            		}
-        		            }
-
-        		            FB.api({method: 'fql.query',
-    		            	    query: 'SELECT page_id, location, name from page where page_id in (' + locid + ')'
-    		            	    },
-    		            	    function(data_loc){
-    		            	    	test = 33;
-    		            	    	//now finally, map everyones locations
-    		            	    	//put the coordinates in arrays
-    		            	    	for(var m = 0; m < data_loc.length; m += 1){
-    		            	    		photo_locs_lat[data_loc[m].page_id] = data_loc[m].location.latitude;
-    		            	    		photo_locs_lng[data_loc[m].page_id] = data_loc[m].location.longitude;
-    		            	    		photo_locs_name[data_loc[m].page_id] = data_loc[m].name;
-    		            	    		photo_locs_all[data_loc[m].page_id] = data_loc[m];
-    		            	    	}
-    		            	    	//now build and display the kml
-    		            	    	build_fbphotos_kml();
-
-    		            	    });
-             
-        		            	    	});
-        	 
-         }
 
          function RemoveAllFeatures()
          {
@@ -832,87 +442,8 @@ var user_location = '';
          var statmap = new Array();
          var statmap_count = 0;
          
-         function map_friends_photos(){
-        	 //make fql query
-        	 
-        	 
-         }
-         
-         
-         
          var photos_changed = false;
          var photo_sel_list = [];
-         
-         function friends_photo_map(){
-        	 //use the group of five defined friends
-        	 //for testing, load up the first 5 friends
-        	 //for(var k = 0; k < 5; k += 1){
-        	 //	 statmap[k] = k
-        	 //}
-        	 for(key in statmap){
-            	 //create the map string
-            	 if(statmap.hasOwnProperty(key)){
-                	 var findex = parseInt(key);
-                	 get_photos(locfriends[findex].uid);
-            	 }
-        	 }
-        	 
-        	 //clear stroage of friends for map
-        	 for(dkey in statmap){
-            	 //create the map string
-            	 if(statmap.hasOwnProperty(key)){
-            		 delete statmap[dkey];
-            	 }
-        	 }
-         }
-
-         function friends_static_map(){
-        	 //use the group of five defined friends
-        	 //for testing, load up the first 5 friends
-        	 //for(var k = 0; k < 5; k += 1){
-        	 //	 statmap[k] = k
-        	 //}
-        	 var statmapstring = 'http://maps.googleapis.com/maps/api/staticmap?size=640x640&';
-        	 for(key in statmap){
-            	 //create the map string
-            	 if(statmap.hasOwnProperty(key)){
-                	 var findex = parseInt(key);
-            		 statmapstring += 'markers=icon:http://graph.facebook.com/' + locfriends[findex].uid;
-                		 statmapstring += '/picture|' + friend_locs_lat[locfriends[findex][map_location].id] + 
-		                  ',' + friend_locs_lng[locfriends[findex][map_location].id] + '|&'; 
-            		 //uncheck the selection box
-            		 el('fcb_' + findex).checked = false;
-            	 }
-        		                  
-        	 }
-        	 
-        	 //clear stroage of friends for map
-        	 for(dkey in statmap){
-            	 //create the map string
-            	 if(statmap.hasOwnProperty(key)){
-            		 delete statmap[dkey];
-            	 }
-        	 }
-            		 
-             statmapstring += 'sensor=false';
-        	 el('date').innerHTML = '<a target="_blank" href="' + statmapstring + '">testmap</a>';
-        	 
-        	 //now add the map to the user's photos
-        	 //var imgURL="http://farm4.staticflickr.com/3332/3451193407_b7f047f4b4_o.jpg";//change with your external photo url
-        	 FB.api('/me/photos', 'post', {
-        	     url:statmapstring
-        	 }, function(response){
-
-        	     if (!response || response.error) {
-        	         alert('Error occured' + response.error.message);
-        	     } else {
-        	         //alert('Post ID: ' + response.id);
-        	     }
-
-        	 });        	 
-        	 
-         }
-         
          
          
          function build_friends_kml(){
@@ -924,11 +455,6 @@ var user_location = '';
 		    for(var i = 0; i < friend_loc_count; i += 1){
 		    	mapheader += friend_style(i, friend_response.data[i].id, friend_response.data[i].name, friend_response.data[i][map_location].name);
 		    }
-		    //mapheader += '<Style id="t1158403"><LabelStyle><color>ffa8ff00</color><scale>0.75</scale></LabelStyle>';
-		    //mapheader += '<IconStyle><Icon><href>http://d1dhsh1i77j8ju.cloudfront.net/s0/f16/p27p27.png</href>';
-		    //mapheader += '<IconStyle><Icon><href>' + 'http://graph.facebook.com/' + target_id + '/picture</href>';
-		    //mapheader += '</Icon><scale>0.75</scale></IconStyle>';
-		    //mapheader += '<LineStyle><color>ff00ff00</color><colorMode>normal</colorMode><width>2</width>';
 		    
 		    //Now add all the placemarks
 		    for(var k = 0; k < friend_loc_count; k += 1){
@@ -938,23 +464,6 @@ var user_location = '';
 		 
 		    mapheader += '</Document></kml>';
 
-		    //walk through list of friends and add one icon and placemark for each
-		    //var mapstring = mapheader;
-			 //Build a new placemark for the friend
-
-		    //var mapstring = mapheader;
-	    	//mapstring += target_name + '</name><description></description><styleUrl>#t1158403</styleUrl>';
-	    	//mapstring += '<MultiGeometry><Point><altitudeMode>absolute</altitudeMode><coordinates>';
-	    	//Split the rtrackpos string and get the first point of the track
-	    	//rpoints = rtrackpos.split(' ');
-	    	//rfirstpoint = rpoints[0].split(',');
-	    	//mapstring += latlng.lng() + ',' + latlng.lat();
-	    	//mapstring += '</coordinates></Point>';
-	    	//mapstring += '<altitudeMode>absolute</altitudeMode><coordinates>';
-	    	//Add all the saved points for the track
-	    	//mapstring += rtrackpos;
-	    	//mapstring += '</MultiGeometry>';
-	    	//mapstring += mapfooter;
 		    
 	        built_track = ge.parseKml(mapheader);
 	        ge.getFeatures().appendChild(built_track);
@@ -1041,123 +550,6 @@ var user_location = '';
          
          
          var friend_offset = 0;
-         function build_photo_friend_list(){
-        	 
-        	 //first get rid of the old friend list and display a message that we're working
-        	 //el('friend_list').innerHTML = "Retrieving Friend Photo Locations"
-        	 //now execute the fql to get friends photos and locations
-        	                //var offset = 0;
-        		            FB.api({method: 'fql.query',
-        		            	    query: 'SELECT object_id,  owner from photo where aid in (select aid FROM album WHERE owner = ' + locfriends[friend_offset].uid + ') and place_id != \'\''
-        		            	    },
-        		            	    function(data_loc){
-        		            	    	//offset += 200;
-        		            	    	if(data_loc.length != 0){
-            		            	    	//photo_data = photo_data.concat(data_loc);
-            		            	    	
-            		            	    	//Update the photo count per suer
-            		            	    	for(var k = 0; k < data_loc.length; k += 1){
-            		            	    		if(photo_count[data_loc[k].owner] == null){
-            		            	    			photo_count[data_loc[k].owner] = 1;
-            		            	    		}else{
-                		            	    		photo_count[data_loc[k].owner] += 1; 
-            		            	    		}
-            		            	    	}
-        		            	    	create_friend_photo_list(false);
-        		            	    	}
-        		            	    	
-        		            	    	friend_offset += 1;
-        		            	    	if(friend_offset != locfriends.length){
-        		            	    		//call this function recursively to get the next friend
-        		            	    		//first, dump all the returned data to lower memory footprint
-        		            	    		for(var m = 0; m < data_loc.length; m += 1){
-        		                   			 delete data_loc[m];
-        		            	    		}
-        		            	    		
-        		            	    		build_photo_friend_list();
-        		            	    	}else{
-        		            	    		create_friend_photo_list(true);
-        		            	    	}
-        		            	    	
-
-
-        		            	    });
-        	 
-        	 
-         }
-
-         function build_photo_friend_list3(offset){
-        	 
-        	 //first get rid of the old friend list and display a message that we're working
-        	 //el('friend_list').innerHTML = "Retrieving Friend Photo Locations"
-        	 //now execute the fql to get friends photos and locations
-        	                //var offset = 0;
-        		            FB.api({method: 'fql.query',
-        		            	    query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, src_big_width, src_big_height, caption from photo where aid in (select aid FROM album WHERE owner in(SELECT uid2 FROM friend WHERE uid1 = me())) and place_id != \'\' order by owner limit 200 offset ' + offset
-        		            	    },
-        		            	    function(data_loc){
-        		            	    	//offset += 200;
-        		            	    	photo_data = photo_data.concat(data_loc);
-        		            	    	
-        		            	    	//Update the photo count per suer
-        		            	    	for(var k = 0; k < data_loc.length; k += 1){
-        		            	    		if(photo_count[data_loc[k].owner] == null){
-        		            	    			photo_count[data_loc[k].owner] = 1;
-        		            	    		}else{
-            		            	    		photo_count[data_loc[k].owner] += 1; 
-        		            	    		}
-        		            	    	}
-        		            	    	
-        		            	    	//Now update the list of users and call this function again
-        		            	    	//if necessary
-        		            	    	//create_friend_photo_list();
-        		            	    	if(data_loc.length != 200){
-        		            	    		create_friend_photo_list(true);
-        		            	    	}else{
-        		            	    		build_photo_friend_list(offset + 200);
-        		            	    		create_friend_photo_list(false);
-        		            	    	}
-        		            	    	
-        		            	    	//now get the users photos
-        		                        //FB.api({method: 'fql.query',
-        		            	        //        query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, caption from photo where aid in (select aid FROM album WHERE owner = me()) and place_id != \'\''
-        		            	        //       },
-        		            	        //       function(data_loc){
-        		            	    	//       photo_data = data_loc.concat(photo_data);
-               		            	    //	   create_friend_photo_list();
-        		            	        //       });
-
-
-        		            	    });
-        	 
-        	 
-         }
-         
-         function build_photo_friend_list2(frid_str){
-        	 
-        	 //first get rid of the old friend list and display a message that we're working
-        	 el('friend_list').innerHTML = "Retrieving Friend Photo Locations"
-        	 //now execute the fql to get friends photos and locations
-        		            FB.api({method: 'fql.query',
-        		            	    query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, src_big_width, src_big_height, caption from photo where aid in (select aid FROM album WHERE owner ' + frid_str + ')'
-        		            	    },
-        		            	    function(data_loc){
-        		            	    	photo_data = data_loc;
-        		            	    	
-        		            	    	//now get the users photos
-        		                        FB.api({method: 'fql.query',
-        		            	                query: 'SELECT object_id,  owner, place_id, link, modified, src_small, src, src_big, caption from photo where aid in (select aid FROM album WHERE owner = me()) and place_id != \'\''
-        		            	               },
-        		            	               function(data_loc){
-        		            	    	       photo_data = data_loc.concat(photo_data);
-               		            	    	   create_friend_photo_list();
-        		            	               });
-
-
-        		            	    });
-        	 
-        	 
-         }
          
          function build_photo_friend_tour(frid){
         	 
@@ -1184,53 +576,6 @@ var user_location = '';
          }
 
          var photo_count = new Array;
-    function create_friend_photo_list(complete){
-
- 		    //first count the number of photos for each friend
-	    	//for(var k = 0; k < locfriends.length; k += 1){
-	    	//  var search_id = locfriends[k].uid;
-	    	//  var search_count = 0;
-	    	//  for(var m = 0; m < photo_data.length; m += 1){
-	    //		  if(photo_data[m].owner == search_id){
-	    	//		  search_count += 1;
-	    	//		  photo_count[search_id.toString()] = search_count;
-	    //		  }
-	    	//  }
-	    	//}
- 		    var friend_list = '';
-            if(!complete){
-           	   friend_list = 'Retrieving Friend Photo Locations... Completed ' + friend_offset + ' of ';
-           	   friend_list += locfriends.length + ' located friends';
-            }
-	    	//now create the friend list
- 		    friend_list += '<table style="width:100%; table-layout:fixed"><tr>';
-	    	for(var k = 0; k < locfriends.length; k += 1){
- 		    	//only map friends with defined locations
- 		    	
- 		    	
- 		    	if(photo_count[locfriends[k].uid] != null){
-		            	//locations.push(data[i].current_location.id);        		            			
-		 	        	//List all the friends that can be placed in static maps
-		 	        	//friend_list += '<td style="width:33%" align="left"><input id="fcb_' + k + '" type="checkbox" value="" onclick="static_friend(' + k + ')"></input>';
-		 	        	friend_list += '<td style="width:33%" align="left"><a href="javascript:void(0);" onclick="$(\'slidedown_demo\').hide(); get_photos(' + locfriends[k].uid + ');">';
-		 	        	friend_list += '<img src="http://graph.facebook.com/' + locfriends[k].uid + '/picture"></img>';
-		 	        	friend_list += locfriends[k].name
-		 	        	if(photo_count[locfriends[k].uid] != null){
-		 	        		friend_list += ' ' + photo_count[locfriends[k].uid.toString()] + ' ';
-		 	        	}
-		 	        	friend_list += '</td>';
-		 	        	friend_list_count += 1;
-		 	        	if((friend_list_count)%3 == 0){
-		 	        		friend_list += '</tr><tr>'
-		 	        	}
-	    	    }
- 		    }
- 		    //Close the table
- 		    friend_list += '</tr></table>';
- 		    //add controls
- 		    //write the table to the page
- 		    el('friend_list').innerHTML = friend_list;
-    }         
 
     
     var first_saved_play = false;
@@ -1303,202 +648,12 @@ var user_location = '';
  	        }
           }
          
-         function static_friend(index){
-        	 //get the status of the checbox
-        	 if(el('fcb_' + index).checked && statmap_count < 5){
-        		 statmap[index.toString()] = 1;
-        		 statmap_count += 1;
-        	 }
-        	 else if(el('fcb_' + index).checked && (statmap_count >= 5)){
-        		 el('fcb_' + index).checked = false;
-        	 }
-        	 if(!el('fcb_' + index).checked){
-        		 if(statmap[index.toString()] != null){
-        			 delete statmap[index.toString()];
-        			 statmap_count -= 1;
-        		 }
-        	 }
-         }
          
          var friend_loc_count = 0;
-         function begin_map_friend(  ){
-        	 //FB.api('/' + userid, end_map_friend);  
-        	 //end_map_friend();
-        	     friend_loc_count = 3;
-        		 if(friend_count != friend_loc_count){
-        		   if(friend_response.data[friend_count].location != null){
-        			   if(friend_response.data[friend_count].location.name != null){
-            			   geocoder = new GClientGeocoder();
-            			   geocoder.getLatLng(friend_response.data[friend_count].location.name, function(latlng){
-            				  	  friend_locs[friend_count] = latlng;
-           		        		  friend_count += 1;
-            					  //begin_map_friend();
-            			   });
-        			   }else{
-  				  	      friend_locs[friend_count] = null;
-		        		  friend_count += 1;
-    					  //begin_map_friend();        			   
-        			   }
-        		   }else{
- 				  	      friend_locs[friend_count] = null;
-		        		  friend_count += 1;
-    					  //begin_map_friend();
-        			   
-        		   }
-        		 }else{
-                	 //el('map_friends').disabled = false;
-                	 //build the set of kml placemarks for the globe
-                	 build_friends_kml();
-        		 }
-        		 
-        	 //}
-         }
-         
-         function end_map_friend(){
-    	     if(friend_response.data[friend_count].location != null){
-    		     //set the second placemarker at the user's location
-      		     set_map_target(friend_response.data[friend_count].location.name, friend_response.data[friend_count].id, friend_response.data[friend_count].name);
-       	     }else{
-        	 	 friend_count = friend_count + 1;
-        		 if(friend_count != friend_response.data.length){
-        			 //begin_map_friend();
-        		 }else{
-        			 el('map_friends').disabled = false;
-        		 }
-       	    	 
-       	    	 
-       	     }
-        	 //alert('landed in end_locate_friend');
-         }
          
          var saved_friend_id = '{{tour.friendid}}';
          var saved_photo_string = '{{tour.photostring}}';
          
-         function save_tour(){
-         	//Save the basics of the hit so the shot can be recreated
-         	   //alert('Setting up request');
-         	   //Remove all mapped calls before indices change
-         	   var tour_params = "phototour=" + encodeURIComponent('save') +
-         	             "&userid=" + encodeURIComponent(login_user) +
-         	             "&friendid=" + encodeURIComponent(friend_to_save) + 
-         	             "&photostring=" + encodeURIComponent(photo_string);
-         	   //alert('url is ' + url);
-                //Now send the scores to the db
-                if (typeof XMLHttpRequest != "undefined") {
-                    req = new XMLHttpRequest();
-                } else if (window.ActiveXObject) {
-                    req = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                
-                req.open("POST", '/fbapps/mapmyfriends', true);
-                req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                req.setRequestHeader("Content-length", tour_params.length);
-                req.setRequestHeader("Connection", "close");
-
-                req.onreadystatechange = storetour_cb;
-                req.send(tour_params);
-
-         	//in the receive code, present the keyed link to the user so they can send it to others
-         	//who can replay the shot
-         	
-         	
-         }
-
-         function storetour_cb(){
-             if (req.readyState == 4) {
-                 if (req.status == 200) {
-                       //alert('Entered et_cb with ' + req.responseText);
-                 	  var tour_base = 'http://apps.facebook.com/cfmapmyfriends?tour=';
-                 	  tour_link = tour_base + req.responseText;
-                 	  tour_msg = 'Your saved tour will appear on your action log and can be ';
-                 	  tour_msg += 'accessed <a href="' + tour_base + req.responseText;
-                 	  tour_msg += '">here</a>';
-                 	  //el('msg_here').innerHTML = tour_msg;
-                 	  
-                 	  //Effect.SlideDown('msg_div');
-
-                 	  //post the facebook watch action for this tour
-                 	  var fb_app_action = 'http://copaseticflows.appspot.com/fbapps/mapmyfriends?tour=' + req.responseText;
-                 	  //fb_app_action += '&tags={"' + friend_to_save.toString() + '"}'
-                      FB.api(
-                              '/me/cfmapmyfriends:play',
-                              'post',
-                              { photo_tour: fb_app_action },
-                              function(response) {
-                                 if (!response || response.error) {
-                                    //alert('Error occured ' + response.error.message);
-                                 } else {
-                                    //alert('Log was successful! Action ID: ' + response.id);
-                                 }
-                              });
-                 	  
-                 	  //Let the user post the tour to their wall
-                    	    var app_link = 'http://apps.facebook.com/cfmapmyfriends/?tour=' + req.responseText;
-                 	        var act_name = 'Watched ' + getnamefromid(friend_to_save.toString()) + '\'s photos on Google Earth';
-                    	    var media = [
-                    	        	{
-                    	        		type: 'image',
-                    	        		src: 'http://copaseticflows.appspot.com/img/mapmyfriends200.jpg',
-                    	        		href: app_link
-                    	        	}
-                    	        ];
-                    	    var attachment = {
-                    	        name:  act_name,
-                    	        href: app_link,
-                    	        caption: 'Watching photos on Google Earth',
-                    	        media: media
-                    	    }
-                    	FB.ui(
-                    	   {
-                    	     method: 'stream.publish',
-                    	     attachment: attachment
-                    	   }
-                    	  );
-                 	  
-                 	  
-                 	  //alert(tour_link);
-                       //el('munitions').innerHTML = 'Saved tour link:<br><a href="' + tour_base + 
-                        //                            req.responseText + '">' + tour_base + req.responseText + '</a>';
-                   	//hit_fb(game_link);
-                       //Setup the sharing buttons
-                       //share_tour(tour_link);
-          	    
-
-                 }
-                 else{
-                   alert('storetour reqeust failed ' + req.status + ' ' + req.responseText);
-                 }
-             }
-                 
-         }
-         
-         function getnamefromid(userid){
-        	 for(var k = 0; k < locfriends.length; k += 1){
-        		 if(userid == locfriends[k].uid){
-        			 return locfriends[k].name;
-        		 }
-        	 }
-        	 return '';
-         }
-         
-         function begin_locate_friend( userid ){
-        	 //ask for the friends location
-        	 FB.api('/' + userid, end_locate_friend);        	 
-         }
-         
-         function end_locate_friend(response){
-        	 if(response.location == null){
-        		 alert('Sorry, there is no location for this user');
-        	 }
-        	 if(response.location.name == null){
-        		 alert('Sorry, there is no location for this user');
-        	 }
-        	 else{
-        		 //set the second placemarker at the user's location
-        		 set_target(response.location.name, response.id, response.name);
-        	 }
-        	 //alert('landed in end_locate_friend');
-         }
          
          function name_sort(a,b){
              //[sindex, sname, pindex, startdate, enddate, elev, first_step, last_step]

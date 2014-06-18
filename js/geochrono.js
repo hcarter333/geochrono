@@ -213,7 +213,32 @@ var swllng;
 	    
 	}
 	
-//Date handling functions
+
+//=======================================================================
+//New initialization of v3 map
+//=======================================================================
+  //only initialize once
+  var map_init_b = false;
+  function map_initialize() {
+    if(!map_init_b){
+	  var mapOptions = {
+        center: new google.maps.LatLng(-34.397, 150.644),
+            zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById("friend_list"),
+          mapOptions);
+    map_init_b = true;
+    }
+  }
+  //google.maps.event.addDomListener(window, 'load', initialize);
+
+  function showLocMap(){
+	  Effect.SlideDown('slidedown_demo');
+	  setTimeout(map_initialize, 1001);
+	  return false;
+  }
+	
+	//Date handling functions
   function isValidDate(d) {
     if ( Object.prototype.toString.call(d) !== "[object Date]" )
 	  return false;
